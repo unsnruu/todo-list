@@ -5,6 +5,7 @@ import {
   updateDoc,
   deleteDoc,
   doc,
+  where,
   DocumentReference,
 } from "firebase/firestore";
 import { Todo } from "../types/common.type";
@@ -15,16 +16,16 @@ const createTodoDoc = (id: string) =>
   doc(db, "todos", id) as DocumentReference<Todo>;
 
 const todoService = {
-  async getTodos() {
-    const q = query(todosCollection);
+  async getTodosByCategory(category: string) {
+    const q = query(todosCollection, where("category", "==", category));
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
       console.log(doc.data);
     });
   },
-  async addTodo({ isCompleted, text, title }: Todo) {
-    await addDoc(todosCollection, { title, text, isCompleted });
+  async addTodo(todo: Todo) {
+    await addDoc(todosCollection, todo);
   },
   async editTodo(id: string, todo: Todo) {
     const todoRef = createTodoDoc(id);
