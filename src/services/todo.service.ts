@@ -1,17 +1,37 @@
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "./firebase.service";
+import {
+  query,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  DocumentReference,
+} from "firebase/firestore";
+import { Todo } from "../types/common.type";
+import { createCollection, db } from "./firebase.service";
+
+const todosCollection = createCollection<Todo>("todos");
+const createTodoDoc = (id: string) =>
+  doc(db, "todos", id) as DocumentReference<Todo>;
 
 const todoService = {
-  async addTodo(collectionName: string) {
-    try {
-      const docRef = await addDoc(collection(db, collectionName), {
-        text: "test",
-        description: "테스트 투두를 생성합니다.",
-      });
-      console.log(docRef);
-    } catch (err) {
-      console.log(err);
-    }
+  async getTodos() {
+    const q = query(todosCollection);
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      console.log(doc.data);
+    });
+  },
+  async addTodo({ isCompleted, text, title }: Todo) {
+    await addDoc(todosCollection, { title, text, isCompleted });
+  },
+  async editTodo(id: string, todo: Todo) {
+    const todoRef = createTodoDoc(id);
+    await updateDoc(todoRef, todo);
+  },
+  async deleteTodo(id: string) {
+    await deleteDoc(createTodoDoc(id));
   },
 };
 
