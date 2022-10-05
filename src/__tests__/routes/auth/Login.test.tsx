@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 
 import {
   RouterProvider,
@@ -29,7 +28,7 @@ describe("<Login/> UI", () => {
   it("inputs", () => {
     render(<RouterProvider router={router} />);
 
-    const emailInput = screen.getByRole("textbox");
+    const emailInput = screen.getByLabelText("이메일");
     const passwordInput = screen.getByLabelText("비밀번호");
     expect(emailInput).toBeInTheDocument();
     expect(passwordInput).toBeInTheDocument();
@@ -39,17 +38,5 @@ describe("<Login/> UI", () => {
     render(<RouterProvider router={router} />);
     const btn = screen.getByRole("button", { name: "제출" });
     expect(btn).toBeInTheDocument();
-  });
-});
-
-describe("events", () => {
-  it("form은 무엇이 나올까", () => {
-    render(<RouterProvider router={router} />);
-
-    const form = screen.getByRole("form", { name: "로그인" });
-    const btn = screen.getByRole("button");
-
-    userEvent.click(btn);
-    expect(form).toHaveFormValues({ email: "", password: "" });
   });
 });
