@@ -48,5 +48,8 @@ describe("events", () => {
 
     const form = screen.getByRole("form", { name: "로그인" });
     const btn = screen.getByRole("button");
+
+    userEvent.click(btn);
+    expect(form).toHaveFormValues({ email: "", password: "" });
   });
 });
