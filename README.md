@@ -19,3 +19,7 @@
 - caching을 구현하기
 - Authentication을 통해서 유저의 인증여부 확인하기
 
+## 이슈
+
+1. firebase를 통해 유저별로 데이터(todo)를 어떻게 다르게 보여줄 수 있을까?
+
