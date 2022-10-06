@@ -17,5 +17,5 @@
 - 파이어베이스를 이용하여 실제 앱의 구현 보여주기
 - redux를 사용하여 전역 상태 관리를 구현하기
 - caching을 구현하기
-- Authentication을 통해서 유저의 
+- Authentication을 통해서 유저의 인증여부 확인하기
 
