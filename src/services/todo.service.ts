@@ -20,9 +20,12 @@ const todoService = {
     const q = query(todosCollection, where("category", "==", category));
     const querySnapshot = await getDocs(q);
 
+    const todos: Todo[] = [];
     querySnapshot.forEach((doc) => {
-      console.log(doc.data);
+      todos.push(doc.data());
     });
+
+    return todos;
   },
   async addTodo(todo: Todo) {
     await addDoc(todosCollection, todo);
