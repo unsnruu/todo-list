@@ -1,13 +1,15 @@
 import * as React from "react";
-import { Form, ActionFunctionArgs } from "react-router-dom";
+import { Form, ActionFunctionArgs, redirect } from "react-router-dom";
 import { logIn } from "@api/auth";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   let formData = await request.formData();
+  const { email, password } = Object.fromEntries(formData);
   //? 과연 이런 식의 코드가 파이어 베이스와 유용하게 쓰일 수 있을까라는 의문이 든다.
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-  return logIn({ email, password });
+  if (typeof email !== "string" || typeof password !== "string") return;
+
+  await logIn({ email, password });
+  return redirect("/");
 }
 
 function Login() {
