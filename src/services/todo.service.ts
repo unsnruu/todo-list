@@ -11,9 +11,9 @@ import {
 import { Todo } from "../types/common.type";
 import { createCollection, db } from "./firebase.service";
 
-const todosCollection = createCollection<Todo>("todos");
+const todosCollection = createCollection<Todo>("todo");
 const createTodoDoc = (id: string) =>
-  doc(db, "todos", id) as DocumentReference<Todo>;
+  doc(db, "todo ", id) as DocumentReference<Todo>;
 
 const todoService = {
   async getTodosByCategory(category: string) {
