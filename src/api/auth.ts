@@ -1,9 +1,10 @@
 import authService from "../services/auth.service";
+import { Auth } from "../types/common.type";
 
-const signUp = (email: string, password: string) => {
+const signUp = ({ email, password }: Auth) => {
   authService.signUp(email, password);
 };
-const logIn = (email: string, password: string) => {
+const logIn = ({ email, password }: Auth) => {
   authService.logIn(email, password);
 };
 
