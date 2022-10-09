@@ -26,3 +26,4 @@
 
 1. firebase를 통해 유저별로 데이터(todo)를 어떻게 다르게 보여줄 수 있을까?
 2. 캐싱(Caching)을 어떻게 할 수 있을까?
+3. react-router 6.4 대응과 firebase?
