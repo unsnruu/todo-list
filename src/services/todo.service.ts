@@ -11,18 +11,21 @@ import {
 import { Todo } from "../types/common.type";
 import { createCollection, db } from "./firebase.service";
 
-const todosCollection = createCollection<Todo>("todos");
+const todosCollection = createCollection<Todo>("todo");
 const createTodoDoc = (id: string) =>
-  doc(db, "todos", id) as DocumentReference<Todo>;
+  doc(db, "todo ", id) as DocumentReference<Todo>;
 
 const todoService = {
   async getTodosByCategory(category: string) {
     const q = query(todosCollection, where("category", "==", category));
     const querySnapshot = await getDocs(q);
 
+    const todos: Todo[] = [];
     querySnapshot.forEach((doc) => {
-      console.log(doc.data);
+      todos.push(doc.data());
     });
+
+    return todos;
   },
   async addTodo(todo: Todo) {
     await addDoc(todosCollection, todo);

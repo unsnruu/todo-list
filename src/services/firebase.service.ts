@@ -7,7 +7,6 @@ import {
   DocumentData,
   CollectionReference,
   collection,
-  doc,
 } from "firebase/firestore";
 
 const app = initializeApp(firebaseConfig);
