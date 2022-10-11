@@ -1,11 +1,23 @@
-import authService from "../services/auth.service";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { auth } from "@services/firebase.service";
+import authService from "@services/auth.service";
 import { Auth } from "../types/common.type";
 
-const signUp = ({ email, password }: Auth) => {
-  authService.signUp(email, password);
+const signUp = async ({ email, password }: Auth) => {
+  await createUserWithEmailAndPassword(auth, email, password);
 };
 const logIn = async ({ email, password }: Auth) => {
-  await authService.logIn(email, password);
+  await signInWithEmailAndPassword(auth, email, password);
+};
+const isLoggedIn = async () => {
+  return await authService.isLoggedIn();
+};
+const logOut = async () => {
+  await signOut(auth);
 };
 
-export { signUp, logIn };
+export { signUp, logIn, isLoggedIn, logOut };
