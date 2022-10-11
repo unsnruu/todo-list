@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
+import Layout from "../components/Layout";
 
 function Root() {
   return (
     <div>
-      <h1>Root</h1>
+      <Layout />
       <Outlet />
     </div>
   );
