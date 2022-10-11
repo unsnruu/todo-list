@@ -1,6 +1,7 @@
 import type { UserCredential } from "firebase/auth";
+import type { UserStoreInterface } from "../types/common.type";
 
-class UserStore {
+class UserStore implements UserStoreInterface {
   private _userCredential: UserCredential | null;
   constructor() {
     this._userCredential = null;
