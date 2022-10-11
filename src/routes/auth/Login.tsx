@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Form, ActionFunctionArgs, redirect } from "react-router-dom";
 import { logIn } from "@api/auth";
 
