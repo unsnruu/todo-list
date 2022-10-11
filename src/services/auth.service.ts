@@ -8,18 +8,10 @@ import { auth } from "./firebase.service";
 //todo: cache를 어떻게 할지?
 const authService = {
   async signUp(email: string, password: string) {
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-    } catch (err) {
-      console.error(err);
-    }
+    await createUserWithEmailAndPassword(auth, email, password);
   },
   async logIn(email: string, password: string) {
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (err) {
-      console.log(err);
-    }
+    await signInWithEmailAndPassword(auth, email, password);
   },
   async signOut() {},
 };
