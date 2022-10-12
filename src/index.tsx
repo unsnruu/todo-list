@@ -2,15 +2,37 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 
+import { Global, ThemeProvider, Theme, css } from "@emotion/react";
+
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/index";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
+const theme: Theme = {
+  color: {
+    primary: "#AAC4FF",
+    secondary: "#D2DAFF",
+    dark: "#B1B2FF",
+    light: "#EEF1FF",
+  },
+};
+const globalStyles = css`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+`;
+
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <Global styles={globalStyles} />
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>
 );
 
