@@ -11,15 +11,13 @@ function Layout({ children }: PropsWithChildren) {
       <Header />
       <Main>
         <Sidebar />
-        <Content>
-          <h1>콘텐츠</h1>
-          {children}
-        </Content>
+        <Content>{children}</Content>
       </Main>
     </div>
   );
 }
 export default Layout;
+
 const Content = styled.div`
   margin-top: 1rem;
   margin-right: 1rem;
