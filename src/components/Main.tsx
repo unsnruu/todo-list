@@ -6,4 +6,8 @@ function Main({ children }: PropsWithChildren) {
 }
 export default Main;
 
-const Container = styled.div``;
+const Container = styled.main`
+  display: flex;
+  width: 100%;
+  height: 100%;
+`;
