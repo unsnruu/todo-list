@@ -7,6 +7,7 @@ function AppLayout({ children }: PropsWithChildren) {
     <Container>
       <Header></Header>
       {children}
+      <Footer />
     </Container>
   );
 }
@@ -14,3 +15,4 @@ function AppLayout({ children }: PropsWithChildren) {
 export default AppLayout;
 
 const Container = styled.div``;
+const Footer = styled.footer``;
