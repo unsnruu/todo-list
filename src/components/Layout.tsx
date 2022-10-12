@@ -2,14 +2,13 @@ import { PropsWithChildren } from "react";
 import styled from "@emotion/styled";
 
 import Header from "./Header";
-import Sidebar from "./Sidebar";
+import Main from "./Main";
 
 function Layout({ children }: PropsWithChildren) {
   return (
     <Container>
       <Header />
-      <Sidebar />
-      {children}
+      <Main>{children}</Main>
     </Container>
   );
 }
