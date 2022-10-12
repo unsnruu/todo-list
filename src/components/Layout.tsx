@@ -1,10 +1,14 @@
 import { PropsWithChildren } from "react";
 import styled from "@emotion/styled";
 
+import Header from "./Header";
+import Sidebar from "./Sidebar";
+
 function Layout({ children }: PropsWithChildren) {
   return (
     <Container>
-      <h1>Layout</h1>
+      <Header />
+      <Sidebar />
       {children}
     </Container>
   );
