@@ -1,9 +1,11 @@
+import type { PropsWithChildren } from "react";
 import styled from "@emotion/styled";
 
-function Header() {
+function Header({ children }: PropsWithChildren) {
   return (
     <Container>
       <span>logo</span>
+      {children}
     </Container>
   );
 }
