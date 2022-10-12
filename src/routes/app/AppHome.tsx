@@ -1,11 +1,14 @@
 import styled from "@emotion/styled";
+import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 
 function AppHome() {
   return (
     <Main>
       <Sidebar />
-      <Content></Content>
+      <Content>
+        <Outlet />
+      </Content>
     </Main>
   );
 }
