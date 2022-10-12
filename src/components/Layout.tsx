@@ -2,29 +2,18 @@ import { PropsWithChildren } from "react";
 import styled from "@emotion/styled";
 
 import Header from "./Header";
-import Main from "./Main";
-import Sidebar from "./Sidebar";
 
 function Layout({ children }: PropsWithChildren) {
   return (
-    <div>
+    <Container>
       <Header />
-      <Main>
-        <Sidebar />
-        <Content>{children}</Content>
-      </Main>
-    </div>
+      {children}
+    </Container>
   );
 }
 export default Layout;
 
-const Content = styled.div`
-  margin-top: 1rem;
-  margin-right: 1rem;
-  width: 100%;
-  min-height: 20rem;
-  height: 100%;
-  border-radius: 1rem;
-  background-color: white;
-  padding: 1rem;
+const Container = styled.div`
+  height: 100vh;
+  background-color: ${({ theme }) => theme.color.light};
 `;
