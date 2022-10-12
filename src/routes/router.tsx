@@ -8,6 +8,7 @@ import Root from "@routes/Root";
 import Home from "@routes/Home";
 import Login, { action as loginAction } from "@routes/auth/Login";
 import SignUp, { action as signupAction } from "@routes/auth/SignUp";
+import AppRoot from "@routes/app/AppRoot";
 import AppHome from "@routes/app/AppHome";
 
 export const router = createBrowserRouter(
@@ -18,7 +19,9 @@ export const router = createBrowserRouter(
         <Route path="login" element={<Login />} action={loginAction} />
         <Route path="signup" element={<SignUp />} action={signupAction} />
       </Route>
-      <Route path="app" element={<AppHome />}></Route>
+      <Route path="app" element={<AppRoot />}>
+        <Route index element={<AppHome />}></Route>
+      </Route>
     </Route>
   )
 );
