@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 
-import { ThemeProvider, Theme } from "@emotion/react";
+import { Global, ThemeProvider, Theme, css } from "@emotion/react";
 
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/index";
@@ -19,10 +19,18 @@ const theme: Theme = {
     light: "#EEF1FF",
   },
 };
+const globalStyles = css`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+`;
 
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
+      <Global styles={globalStyles} />
       <RouterProvider router={router} />
     </ThemeProvider>
   </React.StrictMode>
