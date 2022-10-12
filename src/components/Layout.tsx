@@ -31,6 +31,6 @@ const Content = styled.div`
   min-height: 20rem;
   height: 100%;
   border-radius: 1rem;
-  background-color: white;
+  background-color: transparent;
   padding: 1rem;
 `;
