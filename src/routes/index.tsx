@@ -4,7 +4,7 @@ import {
   Route,
 } from "react-router-dom";
 
-import Root from "@routes/Root";
+import Root from "@routes/app/Root";
 import Login, { action as loginAction } from "@routes/auth/Login";
 import SignUp, { action as signupAction } from "@routes/auth/SignUp";
 
