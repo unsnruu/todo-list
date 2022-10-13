@@ -2,12 +2,16 @@ import type { PropsWithChildren } from "react";
 import styled from "@emotion/styled";
 import Header from "@components/Header";
 import Sidebar from "@components/Sidebar";
+import { logOut } from "@api/auth";
 
 function AppLayout({ children }: PropsWithChildren) {
+  const handleClickLogout = () => {
+    logOut();
+  };
   return (
     <Container>
       <Header>
-        <LogOutButton>로그아웃</LogOutButton>
+        <LogOutButton onClick={handleClickLogout}>로그아웃</LogOutButton>
       </Header>
       <Main>
         <Sidebar />
