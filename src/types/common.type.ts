@@ -2,6 +2,7 @@ export interface Todo {
   text: string;
   isCompleted: boolean;
   category: string;
+  id: string;
 }
 export type Todos = Todo[];
 export interface Auth {
