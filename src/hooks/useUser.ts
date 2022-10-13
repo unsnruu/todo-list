@@ -1,21 +1,7 @@
-import { useState, useEffect } from "react";
-import { onAuthStateChanged, User } from "firebase/auth";
-
-import { auth } from "@services/firebase.service";
+import { useContext } from "react";
+import { UserContext } from "../context/userContext";
 
 function useUser() {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
-    });
-  }, []);
-
-  return user;
+  return useContext(UserContext);
 }
 export default useUser;
