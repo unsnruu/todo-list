@@ -4,8 +4,8 @@ import { Todo } from "../types/common.type";
 const getTodosByCategory = (category: string) => {
   return todoService.getTodosByCategory(category);
 };
-const addTodo = (todo: Todo) => {
-  todoService.addTodo(todo);
+const addTodo = (category: string, todo: Todo) => {
+  todoService.addTodo(category, todo);
 };
 const editTodo = (id: string, todo: Todo) => {
   todoService.editTodo(id, todo);
