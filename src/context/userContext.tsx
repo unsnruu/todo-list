@@ -2,10 +2,9 @@ import { useState, useEffect, createContext, PropsWithChildren } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@services/firebase.service";
 
-interface UserContextType {
-  user: User | null;
-}
-const UserContext = createContext<UserContextType>({ user: null });
+type UserContextType = User | null;
+
+const UserContext = createContext<UserContextType>(null);
 
 function UserProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState<User | null>(null);
@@ -20,9 +19,7 @@ function UserProvider({ children }: PropsWithChildren) {
     });
   }, []);
 
-  return (
-    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
-  );
+  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 }
 export default UserProvider;
 export { UserContext };

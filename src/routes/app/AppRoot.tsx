@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import useUser from "@hooks/useUser";
 
 function AppRoot() {
-  const { user } = useUser();
+  const user = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
