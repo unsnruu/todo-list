@@ -5,7 +5,8 @@ import reportWebVitals from "./reportWebVitals";
 import { Global, ThemeProvider, Theme, css } from "@emotion/react";
 
 import { RouterProvider } from "react-router-dom";
-import { router } from "./routes/router";
+import UserProvider from "./context/userContext";
+import { router } from "@routes/router";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -24,6 +25,10 @@ const globalStyles = css`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Pretendard Variable", Pretendard, -apple-system,
+      BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+      "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   }
 `;
 
@@ -31,7 +36,9 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <Global styles={globalStyles} />
-      <RouterProvider router={router} />
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

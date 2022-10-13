@@ -1,30 +1,16 @@
+import { useEffect } from "react";
 import styled from "@emotion/styled";
-import { Outlet } from "react-router-dom";
-import Sidebar from "../../components/Sidebar";
 
 function AppHome() {
+  useEffect(() => {}, []);
   return (
-    <Main>
-      <Sidebar />
-      <Content>
-        <Outlet />
-      </Content>
-    </Main>
+    <h1>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus eligendi
+      unde odit accusantium dolorem obcaecati sapiente optio nesciunt, dolorum
+      reiciendis autem suscipit dolores, fugiat deserunt quod quas accusamus
+      fuga saepe.
+    </h1>
   );
 }
 
 export default AppHome;
-
-const Main = styled.div`
-  display: flex;
-`;
-const Content = styled.div`
-  margin-top: 1rem;
-  margin-right: 1rem;
-  width: 100%;
-  min-height: 20rem;
-  height: 100%;
-  border-radius: 1rem;
-  background-color: transparent;
-  padding: 1rem;
-`;

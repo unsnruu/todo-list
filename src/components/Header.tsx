@@ -1,9 +1,11 @@
+import type { PropsWithChildren } from "react";
 import styled from "@emotion/styled";
 
-function Header() {
+function Header({ children }: PropsWithChildren) {
   return (
     <Container>
       <span>logo</span>
+      {children}
     </Container>
   );
 }
@@ -16,6 +18,7 @@ const Container = styled.div`
   background-color: white;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 1rem;
   border-radius: 0 0 1rem 1rem;
 `;

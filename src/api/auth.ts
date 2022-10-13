@@ -7,11 +7,8 @@ const signUp = async ({ email, password }: Auth) => {
 const logIn = async ({ email, password }: Auth) => {
   await authService.logIn(email, password);
 };
-const isLoggedIn = () => {
-  return authService.isLoggedIn();
-};
 const logOut = async () => {
   await authService.logOut();
 };
 
-export { signUp, logIn, isLoggedIn, logOut };
+export { signUp, logIn, logOut };

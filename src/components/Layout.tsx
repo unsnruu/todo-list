@@ -1,15 +1,8 @@
 import { PropsWithChildren } from "react";
 import styled from "@emotion/styled";
 
-import Header from "./Header";
-
 function Layout({ children }: PropsWithChildren) {
-  return (
-    <Container>
-      <Header />
-      {children}
-    </Container>
-  );
+  return <Container>{children}</Container>;
 }
 export default Layout;
 
