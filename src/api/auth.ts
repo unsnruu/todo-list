@@ -11,4 +11,4 @@ const logOut = async () => {
   await authService.logOut();
 };
 
-export { signUp, logIn, isLoggedIn, logOut };
+export { signUp, logIn, logOut };
