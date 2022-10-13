@@ -1,27 +1,25 @@
 import {
   query,
   getDocs,
-  updateDoc,
   deleteDoc,
   doc,
   DocumentReference,
+  addDoc,
+  collection,
+  where,
   setDoc,
 } from "firebase/firestore";
 import { Todo } from "../types/common.type";
-import { auth, createCollection, db } from "./firebase.service";
+import { auth, db } from "./firebase.service";
 
-const todosCollection = createCollection<{ todos: [{ title: string }] }>(
-  "userid"
-);
 const createTodoDoc = (id: string) =>
   doc(db, "todo ", id) as DocumentReference<Todo>;
 
-/**
- * 컬렉션이 사용자 정보가 되어야 한다.
- */
 const todoService = {
   async getTodosByCategory(category: string) {
-    const q = query(todosCollection);
+    if (!auth.currentUser) return;
+    const { uid } = auth.currentUser;
+    const q = query(collection(db, uid), where("category", "==", category));
     const querySnapshot = await getDocs(q);
 
     const todos: Todo[] = [];
@@ -31,15 +29,17 @@ const todoService = {
 
     return todos;
   },
-  async addTodo(category: string, todo: Todo) {
+  async addTodo(todo: Todo) {
     if (!auth.currentUser) return;
 
     const { uid } = auth.currentUser;
-    await setDoc(doc(db, uid, category), todo);
+    await addDoc(collection(db, uid), todo);
   },
   async editTodo(id: string, todo: Todo) {
-    const todoRef = createTodoDoc(id);
-    await updateDoc(todoRef, todo);
+    if (!auth.currentUser) return;
+    const { uid } = auth.currentUser;
+    const todoRef = doc(db, uid, id);
+    await setDoc(todoRef, todo);
   },
   async deleteTodo(id: string) {
     await deleteDoc(createTodoDoc(id));
