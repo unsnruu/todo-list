@@ -1,7 +1,7 @@
 export interface Todo {
   text: string;
   isCompleted: boolean;
-  createdAt: Date;
+  category: string;
 }
 export type Todos = Todo[];
 export interface Auth {
