@@ -8,3 +8,6 @@ export interface Auth {
   email: string;
   password: string;
 }
+
+export type Category = string;
+export type Categories = Category[];
