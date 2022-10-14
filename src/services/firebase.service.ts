@@ -9,7 +9,7 @@ import {
   collection,
   doc,
 } from "firebase/firestore";
-import { COLLECTION_CATEGORY } from "src/constant/common";
+import { COLLECTION_CATEGORY } from "../constant/common";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -22,7 +22,6 @@ const getUserId = () => {
 const getCollectionRef = () => {
   return doc(db, COLLECTION_CATEGORY, getUserId());
 };
-
 const createCollection = <T = DocumentData>(collectionName: string) => {
   return collection(db, collectionName) as CollectionReference<T>;
 };
