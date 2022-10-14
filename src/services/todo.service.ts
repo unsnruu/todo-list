@@ -8,36 +8,36 @@ import {
   collection,
   where,
   setDoc,
+  CollectionReference,
 } from "firebase/firestore";
 import { Todo } from "../types/common.type";
-import { auth, db } from "./firebase.service";
+import { db, getUserId } from "./firebase.service";
 
 const createTodoDoc = (id: string) =>
   doc(db, "todo ", id) as DocumentReference<Todo>;
 
 const todoService = {
   async getTodosByCategory(category: string) {
-    if (!auth.currentUser) return;
-    const { uid } = auth.currentUser;
-    const q = query(collection(db, uid), where("category", "==", category));
+    const uid = getUserId();
+    const userCollection = collection(db, uid) as CollectionReference<Todo>;
+    const q = query(userCollection, where("category", "==", category));
     const querySnapshot = await getDocs(q);
 
     const todos: Todo[] = [];
     querySnapshot.forEach((doc) => {
-      console.log(doc.data());
+      const data = doc.data();
+      const todo = { ...data, id: doc.id };
+      todos.push(todo);
     });
 
     return todos;
   },
   async addTodo(todo: Todo) {
-    if (!auth.currentUser) return;
-
-    const { uid } = auth.currentUser;
+    const uid = getUserId();
     await addDoc(collection(db, uid), todo);
   },
   async editTodo(id: string, todo: Todo) {
-    if (!auth.currentUser) return;
-    const { uid } = auth.currentUser;
+    const uid = getUserId();
     const todoRef = doc(db, uid, id);
     await setDoc(todoRef, todo);
   },
