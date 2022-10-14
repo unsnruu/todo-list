@@ -3,8 +3,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { db, auth, getCollectionRef } from "./firebase.service";
+import { setDoc } from "firebase/firestore";
+import { auth, getCollectionRef } from "./firebase.service";
 
 class AuthService {
   async signUp(email: string, password: string) {
