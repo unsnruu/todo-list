@@ -21,7 +21,7 @@ export const router = createBrowserRouter(
         <Route path="signup" element={<SignUp />} action={signupAction} />
       </Route>
       <Route path="app" element={<AppRoot />}>
-        <Route path="home" element={<AppHome />} />
+        <Route index element={<AppHome />} />
         <Route
           path="todo/:category"
           element={<TodoList />}
