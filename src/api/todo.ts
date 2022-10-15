@@ -1,11 +1,11 @@
 import todoService from "@services/todo.service";
 import { Todo } from "../types/common.type";
 
-const getTodosByCategory = (category: string) => {
-  return todoService.getTodosByCategory(category);
+const getTodosByCategory = async (category: string) => {
+  return await todoService.getTodosByCategory(category);
 };
-const addTodo = (category: string, todo: Todo) => {
-  todoService.addTodo(category, todo);
+const addTodo = (todo: Todo) => {
+  todoService.addTodo(todo);
 };
 const editTodo = (id: string, todo: Todo) => {
   todoService.editTodo(id, todo);
