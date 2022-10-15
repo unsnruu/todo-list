@@ -5,6 +5,7 @@ import { getAuth } from "firebase/auth";
 import {
   getFirestore,
   DocumentData,
+  DocumentReference,
   CollectionReference,
   collection,
   doc,
@@ -20,7 +21,9 @@ const getUserId = () => {
   return auth.currentUser.uid;
 };
 const getCollectionRef = () => {
-  return doc(db, COLLECTION_CATEGORY, getUserId());
+  return doc(db, COLLECTION_CATEGORY, getUserId()) as DocumentReference<{
+    categories: string[];
+  }>;
 };
 const createCollection = <T = DocumentData>(collectionName: string) => {
   return collection(db, collectionName) as CollectionReference<T>;
