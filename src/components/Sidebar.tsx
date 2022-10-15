@@ -1,9 +1,17 @@
 import styled from "@emotion/styled";
+import useCategory from "@hooks/useCategory";
 
 function Sidebar() {
+  const { categories } = useCategory();
+
   return (
     <Container>
       <h1>sidebar</h1>
+      <ul>
+        {categories.map((category, idx) => (
+          <li key={idx}>{category}</li>
+        ))}
+      </ul>
     </Container>
   );
 }
