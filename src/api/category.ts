@@ -1,7 +1,7 @@
 import categoryService from "@services/category.service";
 
 const getCategories = async () => {
-  await categoryService.getCategories();
+  return await categoryService.getCategories();
 };
 const addCategory = async (newCategory: string) => {
   await categoryService.addCateogry(newCategory);
