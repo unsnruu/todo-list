@@ -6,7 +6,8 @@
       "@routes/*": ["./src/routes/*"],
       "@api/*": ["./src/api/*"],
       "@services/*": ["./src/services/*"],
-      "@hooks/*": ["./src/hooks/*"]
+      "@hooks/*": ["./src/hooks/*"],
+      "@context/*": ["./src/context/*"]
     }
   }
 }

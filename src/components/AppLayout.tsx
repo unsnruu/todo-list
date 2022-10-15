@@ -1,24 +1,29 @@
 import type { PropsWithChildren } from "react";
 import styled from "@emotion/styled";
+
 import Header from "@components/Header";
 import Sidebar from "@components/Sidebar";
 import { logOut } from "@api/auth";
+import CategoryProvider from "../context/categoryContext";
 
 function AppLayout({ children }: PropsWithChildren) {
   const handleClickLogout = () => {
     logOut();
   };
+
   return (
-    <Container>
-      <Header>
-        <LogOutButton onClick={handleClickLogout}>로그아웃</LogOutButton>
-      </Header>
-      <Main>
-        <Sidebar />
-        <Content>{children}</Content>
-      </Main>
-      <Footer />
-    </Container>
+    <CategoryProvider>
+      <Container>
+        <Header>
+          <LogOutButton onClick={handleClickLogout}>로그아웃</LogOutButton>
+        </Header>
+        <Main>
+          <Sidebar />
+          <Content>{children}</Content>
+        </Main>
+        <Footer />
+      </Container>
+    </CategoryProvider>
   );
 }
 export default AppLayout;

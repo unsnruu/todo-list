@@ -3,11 +3,17 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { auth } from "./firebase.service";
+import { setDoc } from "firebase/firestore";
+import { auth, getCollectionRef } from "./firebase.service";
 
 class AuthService {
   async signUp(email: string, password: string) {
     await createUserWithEmailAndPassword(auth, email, password);
+    //회원 가입과 동시에 유저의 카테고리 정보 초기화
+    const collectionRef = getCollectionRef();
+    await setDoc(collectionRef, {
+      category: [],
+    });
   }
   async logIn(email: string, password: string) {
     await signInWithEmailAndPassword(auth, email, password);
