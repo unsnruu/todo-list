@@ -4,13 +4,14 @@ import styled from "@emotion/styled";
 import Header from "@components/Header";
 import Sidebar from "@components/Sidebar";
 import { logOut } from "@api/auth";
-import CategoryProvider from "../context/categoryContext";
+import CategoryProvider from "@context/categoryContext";
+import { redirect } from "react-router-dom";
 
 function AppLayout({ children }: PropsWithChildren) {
   const handleClickLogout = () => {
     logOut();
+    redirect("/");
   };
-
   return (
     <CategoryProvider>
       <Container>
