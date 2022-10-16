@@ -12,7 +12,7 @@ class AuthService {
     //회원 가입과 동시에 유저의 카테고리 정보 초기화
     const collectionRef = getCollectionRef();
     await setDoc(collectionRef, {
-      category: [],
+      categories: [],
     });
   }
   async logIn(email: string, password: string) {
