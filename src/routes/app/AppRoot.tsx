@@ -3,14 +3,8 @@ import { Outlet, useNavigate } from "react-router-dom";
 
 import AppLayout from "@components/AppLayout";
 import CategoryProvider from "@context/categoryContext";
+
 import useUser from "@hooks/useUser";
-
-import { getCategories } from "@api/category";
-
-export async function loader() {
-  const categories = await getCategories();
-  console.log(categories);
-}
 
 function AppRoot() {
   const user = useUser();
