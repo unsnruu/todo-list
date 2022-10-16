@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import useCategory from "@hooks/useCategory";
+import StyledLink from "@components/StyledLink";
 
 function Sidebar() {
   const { categories } = useCategory();
@@ -9,7 +10,9 @@ function Sidebar() {
       <h1>sidebar</h1>
       <ul>
         {categories.map((category, idx) => (
-          <li key={idx}>{category}</li>
+          <StyledLink key={idx} to={`todo/${category}`}>
+            {category}
+          </StyledLink>
         ))}
       </ul>
     </Container>
