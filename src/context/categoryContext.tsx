@@ -16,11 +16,15 @@ function CategoryProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     (async function () {
-      const data = await getCategories();
+      try {
+        const data = await getCategories();
 
-      if (data) {
-        const { categories } = data;
-        setCategories(categories);
+        if (data) {
+          const { categories } = data;
+          setCategories(categories);
+        }
+      } catch (err) {
+        setCategories([]);
       }
     })();
   }, []);
