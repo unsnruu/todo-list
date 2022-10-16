@@ -3,18 +3,15 @@ import {
   getDocs,
   deleteDoc,
   doc,
-  DocumentReference,
   addDoc,
   collection,
   where,
   setDoc,
   CollectionReference,
 } from "firebase/firestore";
+
 import { Todo } from "../types/common.type";
 import { db, getUserId } from "./firebase.service";
-
-const createTodoDoc = (id: string) =>
-  doc(db, "todo ", id) as DocumentReference<Todo>;
 
 const todoService = {
   async getTodosByCategory(category: string) {
@@ -42,7 +39,9 @@ const todoService = {
     await setDoc(todoRef, todo);
   },
   async deleteTodo(id: string) {
-    await deleteDoc(createTodoDoc(id));
+    const uid = getUserId();
+    const todoRef = doc(db, uid, id);
+    await deleteDoc(todoRef);
   },
 };
 
