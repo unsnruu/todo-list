@@ -10,7 +10,10 @@ import Login, { action as loginAction } from "@routes/auth/Login";
 import SignUp, { action as signupAction } from "@routes/auth/SignUp";
 import AppRoot from "@routes/app/AppRoot";
 import AppHome from "@routes/app/AppHome";
-import TodoList, { loader as todoListLoader } from "@routes/app/TodoList";
+import TodoList, {
+  loader as todoListLoader,
+  action as todoAction,
+} from "@routes/app/TodoList";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +29,7 @@ export const router = createBrowserRouter(
           path="todo/:category"
           element={<TodoList />}
           loader={todoListLoader}
+          action={todoAction}
         />
       </Route>
     </Route>
