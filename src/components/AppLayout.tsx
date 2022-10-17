@@ -40,8 +40,6 @@ const LogOutButton = styled.button`
   color: ${({ theme }) => theme.color.dark};
 `;
 const Content = styled.div`
-  margin-top: 1rem;
-  margin-right: 1rem;
   width: 100%;
   height: 100%;
   border-radius: 1rem;
