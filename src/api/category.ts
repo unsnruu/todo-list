@@ -4,7 +4,7 @@ const getCategories = async () => {
   return await categoryService.getCategories();
 };
 const addCategory = async (newCategory: string) => {
-  await categoryService.addCateogry(newCategory);
+  await categoryService.addCategory(newCategory);
 };
 const deleteCategory = async (id: string) => {};
 
