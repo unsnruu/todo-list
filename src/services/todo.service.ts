@@ -10,7 +10,7 @@ import {
   CollectionReference,
 } from "firebase/firestore";
 
-import type { Todo, TodoForm } from "../types/common.type";
+import type { Todo, TodoForm } from "../types/todo.type";
 import { db, getUserId } from "./firebase.service";
 
 const todoService = {

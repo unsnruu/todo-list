@@ -11,7 +11,7 @@ import {
 
 import { addTodo, deleteTodo, getTodosByCategory, editTodo } from "@api/todo";
 import TodoItem from "@components/TodoItem";
-import type { Todo } from "../../types/common.type";
+import type { Todo } from "../../types/todo.type";
 
 function TodoList() {
   const [newText, setNewText] = useState("");

@@ -1,5 +1,5 @@
 import todoService from "@services/todo.service";
-import type { TodoForm } from "../types/common.type";
+import type { TodoForm } from "../types/todo.type";
 
 const getTodosByCategory = async (category: string) => {
   return await todoService.getTodosByCategory(category);
