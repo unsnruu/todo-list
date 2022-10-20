@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 
 function AppHome() {
   useEffect(() => {}, []);
@@ -7,7 +6,6 @@ function AppHome() {
   return (
     <div>
       <h1>Home</h1>
-      <Link to="todo/test">go to test</Link>
     </div>
   );
 }
