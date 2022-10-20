@@ -13,7 +13,7 @@ const TodoContext = createContext<TodoContextType>({
   setTodos: () => {},
 });
 
-function TodoContextProvider({ children }: PropsWithChildren) {
+function TodoProvider({ children }: PropsWithChildren) {
   const { selected } = useCategory();
   const [todos, setTodos] = useState<Todos>([]);
 
@@ -31,5 +31,5 @@ function TodoContextProvider({ children }: PropsWithChildren) {
   );
 }
 
-export default TodoContextProvider;
+export default TodoProvider;
 export { TodoContext };
