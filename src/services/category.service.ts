@@ -1,7 +1,7 @@
 import { arrayUnion, getDoc, updateDoc } from "firebase/firestore";
-import { getCollectionRef } from "./firebase.service";
-import { CategoryService } from "../types/category.type";
-import { Categories } from "src/constant/common";
+import { getCollectionRef } from "@services/firebase.service";
+import type { Categories } from "../constant/common";
+import type { CategoryService } from "../types/category.type";
 
 class CategoryServiceImpl implements CategoryService {
   categories: Categories | null;
@@ -11,6 +11,7 @@ class CategoryServiceImpl implements CategoryService {
   async getCategories(): Promise<void> {
     const collectionRef = getCollectionRef();
     const docSnap = await getDoc(collectionRef);
+
     if (docSnap.exists()) {
       const { categories } = docSnap.data();
       if (!categories) {
