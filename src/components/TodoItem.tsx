@@ -49,6 +49,7 @@ const Completion = styled.button`
   justify-content: center;
   align-items: center;
   background-color: transparent;
+  cursor: pointer;
 `;
 const bounce = keyframes`
 20%, 75%{
@@ -79,5 +80,6 @@ const IconsContainer = styled.div`
   margin-left: auto;
   & svg {
     margin-left: 1rem;
+    cursor: pointer;
   }
 `;
