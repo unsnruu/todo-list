@@ -13,6 +13,6 @@ export interface TodoService {
   todos: Todos | null;
   getTodosByCategory(category: Category): Promise<void>;
   addTodo(newTood: TodoForm): Promise<void>;
-  editTodo(editTodo: TodoForm): Promise<void>;
+  editTodo(id: TodoId, todo: TodoForm): Promise<void>;
   deleteTodo(id: TodoId): Promise<void>;
 }
