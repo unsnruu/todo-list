@@ -4,13 +4,14 @@ import styled from "@emotion/styled";
 import Header from "@components/Header";
 import Sidebar from "@components/Sidebar";
 import { logOut } from "@api/auth";
-import CategoryProvider from "../context/categoryContext";
+import CategoryProvider from "@context/categoryContext";
+import { redirect } from "react-router-dom";
 
 function AppLayout({ children }: PropsWithChildren) {
   const handleClickLogout = () => {
     logOut();
+    redirect("/");
   };
-
   return (
     <CategoryProvider>
       <Container>
@@ -28,9 +29,13 @@ function AppLayout({ children }: PropsWithChildren) {
 }
 export default AppLayout;
 
-const Container = styled.div``;
+const Container = styled.div`
+  height: 100%;
+  overflow: hidden;
+`;
 const Main = styled.div`
   display: flex;
+  height: 80%;
 `;
 const LogOutButton = styled.button`
   border: none;
@@ -39,12 +44,12 @@ const LogOutButton = styled.button`
   color: ${({ theme }) => theme.color.dark};
 `;
 const Content = styled.div`
-  margin-top: 1rem;
-  margin-right: 1rem;
   width: 100%;
-  height: 100%;
   border-radius: 1rem;
-  background-color: transparent;
   padding: 1rem;
 `;
-const Footer = styled.footer``;
+const Footer = styled.footer`
+  height: 10%;
+  background-color: ${({ theme }) => theme.color.secondary};
+  border-radius: 1rem 1rem 0 0;
+`;

@@ -5,6 +5,9 @@ export interface Todo {
   id: string;
 }
 export type Todos = Todo[];
+
+export type TodoForm = Omit<Todo, "id">;
+
 export interface Auth {
   email: string;
   password: string;
