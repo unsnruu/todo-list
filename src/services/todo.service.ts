@@ -10,11 +10,15 @@ import {
   CollectionReference,
 } from "firebase/firestore";
 
-import type { Todo, TodoForm } from "../types/todo.type";
+import type { Todo, TodoForm, Todos, TodoService } from "../types/todo.type";
 import { db, getUserId } from "./firebase.service";
 
-const todoService = {
-  async getTodosByCategory(category: string) {
+class TodoServiceImpl implements TodoService {
+  todos: Todos | null;
+  constructor() {
+    this.todos = null;
+  }
+  async getTodosByCategory(category: string): Promise<void> {
     const uid = getUserId();
     const userCollection = collection(db, uid) as CollectionReference<Todo>;
     const q = query(userCollection, where("category", "==", category));
@@ -27,22 +31,22 @@ const todoService = {
       todos.push(todo);
     });
 
-    return todos;
-  },
-  async addTodo(todoForm: TodoForm) {
+    this.todos = todos;
+  }
+  async addTodo(newTood: TodoForm): Promise<void> {
     const uid = getUserId();
-    await addDoc(collection(db, uid), todoForm);
-  },
-  async editTodo(id: string, todoForm: TodoForm) {
+    await addDoc(collection(db, uid), newTood);
+  }
+  async editTodo(id: string, todo: TodoForm): Promise<void> {
     const uid = getUserId();
     const todoRef = doc(db, uid, id);
-    await setDoc(todoRef, todoForm);
-  },
-  async deleteTodo(id: string) {
+    await setDoc(todoRef, todo);
+  }
+  async deleteTodo(id: string): Promise<void> {
     const uid = getUserId();
     const todoRef = doc(db, uid, id);
     await deleteDoc(todoRef);
-  },
-};
+  }
+}
 
-export default todoService;
+export default new TodoServiceImpl();
