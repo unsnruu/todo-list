@@ -1,24 +1,23 @@
 import { arrayUnion, getDoc, updateDoc } from "firebase/firestore";
 import { getCollectionRef } from "@services/firebase.service";
-import type { Categories } from "../constant/common";
-import type { CategoryService } from "../types/category.type";
+
+import type { CategoryService, Categories } from "../types/category.type";
 
 class CategoryServiceImpl implements CategoryService {
   categories: Categories | null;
   constructor() {
     this.categories = null;
   }
-  async getCategories(): Promise<void> {
+  async getCategories(): Promise<Categories | null> {
     const collectionRef = getCollectionRef();
     const docSnap = await getDoc(collectionRef);
 
-    if (docSnap.exists()) {
-      const { categories } = docSnap.data();
-      if (!categories) {
-        throw new Error("서버측으로부터 받은 카테고리가 없습니다");
-      }
-      this.categories = categories;
-    }
+    if (!docSnap.exists()) return null;
+
+    const { categories } = docSnap.data();
+    if (!categories) return null;
+
+    return categories;
   }
   async addCategory(newCategory: string): Promise<void> {
     const collectionRef = getCollectionRef();

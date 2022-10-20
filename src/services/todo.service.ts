@@ -10,15 +10,13 @@ import {
   CollectionReference,
 } from "firebase/firestore";
 
-import type { Todo, TodoForm, Todos, TodoService } from "../types/todo.type";
+import type { Todo, Todos, TodoForm, TodoService } from "../types/todo.type";
+import type { Category } from "../types/category.type";
+
 import { db, getUserId } from "./firebase.service";
 
 class TodoServiceImpl implements TodoService {
-  todos: Todos | null;
-  constructor() {
-    this.todos = null;
-  }
-  async getTodosByCategory(category: string): Promise<void> {
+  async getTodosByCategory(category: Category): Promise<Todos> {
     const uid = getUserId();
     const userCollection = collection(db, uid) as CollectionReference<Todo>;
     const q = query(userCollection, where("category", "==", category));
@@ -31,7 +29,7 @@ class TodoServiceImpl implements TodoService {
       todos.push(todo);
     });
 
-    this.todos = todos;
+    return todos;
   }
   async addTodo(newTood: TodoForm): Promise<void> {
     const uid = getUserId();
