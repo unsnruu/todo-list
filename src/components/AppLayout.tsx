@@ -29,9 +29,13 @@ function AppLayout({ children }: PropsWithChildren) {
 }
 export default AppLayout;
 
-const Container = styled.div``;
+const Container = styled.div`
+  height: 100%;
+  overflow: hidden;
+`;
 const Main = styled.div`
   display: flex;
+  height: 80%;
 `;
 const LogOutButton = styled.button`
   border: none;
@@ -41,9 +45,11 @@ const LogOutButton = styled.button`
 `;
 const Content = styled.div`
   width: 100%;
-  height: 100%;
   border-radius: 1rem;
-  background-color: transparent;
   padding: 1rem;
 `;
-const Footer = styled.footer``;
+const Footer = styled.footer`
+  height: 10%;
+  background-color: ${({ theme }) => theme.color.secondary};
+  border-radius: 1rem 1rem 0 0;
+`;
