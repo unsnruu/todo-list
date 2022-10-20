@@ -1,4 +1,4 @@
-import { Text, Category, UserId } from "../constant/common";
+import { Text, Category, UserId, TodoId } from "../constant/common";
 
 export interface Todo {
   text: Text;
@@ -6,7 +6,13 @@ export interface Todo {
   category: Category;
   id: UserId;
 }
-
 export type Todos = Todo[];
-
 export type TodoForm = Omit<Todo, "id">;
+
+export interface TodoService {
+  todos: Todos | null;
+  getTodosByCategory(category: Category): Promise<void>;
+  addTodo(newTood: TodoForm): Promise<void>;
+  editTodo(editTodo: TodoForm): Promise<void>;
+  deleteTodo(id: TodoId): Promise<void>;
+}
