@@ -1,36 +1,35 @@
 import { useEffect, createContext, useState } from "react";
 import type { PropsWithChildren, Dispatch } from "react";
-import { getCategories } from "@api/category";
+import categoryService from "@services/category.service";
+import type { Categories, Category } from "../types/category.type";
 
 interface CategoriesContextType {
-  setCategories: Dispatch<React.SetStateAction<string[]>>;
-  categories: string[];
+  selected: Category | null;
+  setSelected: Dispatch<React.SetStateAction<Category | null>>;
+  categories: Categories | null;
+  setCategories: Dispatch<React.SetStateAction<Categories | null>>;
 }
 const CategoryContext = createContext<CategoriesContextType>({
-  categories: [],
+  categories: null,
   setCategories: () => {},
+  selected: null,
+  setSelected: () => {},
 });
 
 function CategoryProvider({ children }: PropsWithChildren) {
-  const [categories, setCategories] = useState<string[]>([]);
-
+  const [selected, setSelected] = useState<Category | null>(null);
+  const [categories, setCategories] = useState<Categories | null>(null);
   useEffect(() => {
     (async function () {
-      try {
-        const data = await getCategories();
-
-        if (data) {
-          const { categories } = data;
-          setCategories(categories);
-        }
-      } catch (err) {
-        setCategories([]);
-      }
+      const result = await categoryService.getCategories();
+      setCategories(result);
     })();
   }, []);
 
   return (
-    <CategoryContext.Provider value={{ setCategories, categories }}>
+    <CategoryContext.Provider
+      value={{ selected, setSelected, setCategories, categories }}
+    >
       {children}
     </CategoryContext.Provider>
   );
