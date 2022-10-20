@@ -10,7 +10,7 @@ import {
   CollectionReference,
 } from "firebase/firestore";
 
-import { Todo } from "../types/common.type";
+import type { Todo, TodoForm } from "../types/common.type";
 import { db, getUserId } from "./firebase.service";
 
 const todoService = {
@@ -29,14 +29,14 @@ const todoService = {
 
     return todos;
   },
-  async addTodo(todo: Todo) {
+  async addTodo(todoForm: TodoForm) {
     const uid = getUserId();
-    await addDoc(collection(db, uid), todo);
+    await addDoc(collection(db, uid), todoForm);
   },
-  async editTodo(id: string, todo: Todo) {
+  async editTodo(id: string, todoForm: TodoForm) {
     const uid = getUserId();
     const todoRef = doc(db, uid, id);
-    await setDoc(todoRef, todo);
+    await setDoc(todoRef, todoForm);
   },
   async deleteTodo(id: string) {
     const uid = getUserId();
