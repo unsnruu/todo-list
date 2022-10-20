@@ -5,6 +5,7 @@ import StyledLink from "@components/StyledLink";
 function Sidebar() {
   const { categories } = useCategory();
 
+  if (!categories) return <div>카테고리가 존재하지 않습니다</div>;
   return (
     <Container>
       <Title>카테고리</Title>
