@@ -10,13 +10,10 @@ import {
 
 import { addTodo, deleteTodo, getTodosByCategory, editTodo } from "@api/todo";
 import TodoItem from "@components/TodoItem";
-import useTodos from "@hooks/useTodos";
 
 function TodoList() {
   const [newText, setNewText] = useState("");
-  const { todos } = useTodos();
 
-  // const todos = useLoaderData() as Todo[];
   const revalidator = useRevalidator();
   const naviagation = useNavigation();
 
