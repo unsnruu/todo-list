@@ -8,9 +8,8 @@ import useTodoList from "@hooks/useTodoList";
 import type { Todos } from "../../types/todo.type";
 
 function TodoList() {
-  const { todos, setTodos } = useTodoList();
+  const { todos, setTodos, state } = useTodoList();
   const naviagation = useNavigation();
-
   const [newText, setNewText] = useState("");
 
   const handleSubmit = () => {

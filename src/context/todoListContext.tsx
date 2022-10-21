@@ -7,6 +7,7 @@ import type { PropsWithChildren, Dispatch, SetStateAction } from "react";
 import type { User } from "../types/user.type";
 import type { Todos } from "../types/todo.type";
 import type { Categories, Category } from "../types/category.type";
+import type { FetchingState } from "../types/common.type";
 
 type SelectedCategory = null | Category;
 interface TodosState {
@@ -17,6 +18,7 @@ interface TodosState {
   setSelectedCategory: Dispatch<SetStateAction<SelectedCategory>>;
   setCategories: Dispatch<SetStateAction<Categories>>;
   setTodos: Dispatch<SetStateAction<Todos>>;
+  state: FetchingState;
 }
 export const TodosStateContext = createContext<TodosState>({
   selectedCategory: null,
@@ -26,6 +28,7 @@ export const TodosStateContext = createContext<TodosState>({
   setSelectedCategory: () => {},
   setCategories: () => {},
   setTodos: () => {},
+  state: "idle",
 });
 
 function TodosStateProvider({ children }: PropsWithChildren) {
@@ -34,6 +37,7 @@ function TodosStateProvider({ children }: PropsWithChildren) {
   const [categories, setCategories] = useState<Categories>(null);
   const [todos, setTodos] = useState<Todos>([]);
   const [user, setUser] = useState<User>(null);
+  const [state, setState] = useState<FetchingState>("idle");
 
   useEffect(() => {
     userService.getUser((user) => {
@@ -43,8 +47,10 @@ function TodosStateProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     const fetchCategories = async () => {
+      setState("loading");
       const categories = await categoryService.getCategories(user);
       setCategories(categories);
+      setState("idle");
     };
     fetchCategories();
   }, [user]);
@@ -52,8 +58,10 @@ function TodosStateProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     const fetchTodos = async () => {
       if (!selectedCategory) return;
+      setState("loading");
       const todos = await todoService.getTodosByCategory(selectedCategory);
       setTodos(todos);
+      setState("idle");
     };
     fetchTodos();
   }, [selectedCategory]);
@@ -68,6 +76,7 @@ function TodosStateProvider({ children }: PropsWithChildren) {
         setSelectedCategory,
         setCategories,
         setTodos,
+        state,
       }}
     >
       {children}
