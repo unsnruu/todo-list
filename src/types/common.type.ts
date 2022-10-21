@@ -1,17 +1,5 @@
-export interface Todo {
-  text: string;
-  isCompleted: boolean;
-  category: string;
-  id: string;
-}
-export type Todos = Todo[];
+export type Text = string;
+export type TodoId = string;
+export type UserId = string;
 
-export type TodoForm = Omit<Todo, "id">;
-
-export interface Auth {
-  email: string;
-  password: string;
-}
-
-export type Category = string;
-export type Categories = Category[];
+export type FetchingState = "loading" | "idle";

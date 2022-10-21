@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import Header from "@components/Header";
 import Sidebar from "@components/Sidebar";
 import { logOut } from "@api/auth";
-import CategoryProvider from "@context/categoryContext";
+
 import { redirect } from "react-router-dom";
 
 function AppLayout({ children }: PropsWithChildren) {
@@ -13,18 +13,16 @@ function AppLayout({ children }: PropsWithChildren) {
     redirect("/");
   };
   return (
-    <CategoryProvider>
-      <Container>
-        <Header>
-          <LogOutButton onClick={handleClickLogout}>로그아웃</LogOutButton>
-        </Header>
-        <Main>
-          <Sidebar />
-          <Content>{children}</Content>
-        </Main>
-        <Footer />
-      </Container>
-    </CategoryProvider>
+    <Container>
+      <Header>
+        <LogOutButton onClick={handleClickLogout}>로그아웃</LogOutButton>
+      </Header>
+      <Main>
+        <Sidebar />
+        <Content>{children}</Content>
+      </Main>
+      <Footer />
+    </Container>
   );
 }
 export default AppLayout;

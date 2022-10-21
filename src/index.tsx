@@ -5,6 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import { Global, ThemeProvider, Theme, css } from "@emotion/react";
 
 import { router } from "@routes/router";
+import RootProvider from "@context/rootContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -34,7 +35,9 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <Global styles={globalStyles} />
-      <RouterProvider router={router} />
+      <RootProvider>
+        <RouterProvider router={router} />
+      </RootProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

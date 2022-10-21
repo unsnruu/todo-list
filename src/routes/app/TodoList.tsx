@@ -1,23 +1,16 @@
 import React, { useState } from "react";
+import { Form, useNavigation } from "react-router-dom";
 import styled from "@emotion/styled";
-import {
-  ActionFunctionArgs,
-  Form,
-  LoaderFunctionArgs,
-  useLoaderData,
-  useNavigation,
-  useRevalidator,
-} from "react-router-dom";
 
-import { addTodo, deleteTodo, getTodosByCategory, editTodo } from "@api/todo";
+import { deleteTodo, editTodo } from "@api/todo";
 import TodoItem from "@components/TodoItem";
-import type { Todo } from "../../types/common.type";
+import useTodoList from "@hooks/useTodoList";
+import type { Todos } from "../../types/todo.type";
 
 function TodoList() {
-  const [newText, setNewText] = useState("");
-  const todos = useLoaderData() as Todo[];
-  const revalidator = useRevalidator();
+  const { todos, setTodos, state } = useTodoList();
   const naviagation = useNavigation();
+  const [newText, setNewText] = useState("");
 
   const handleSubmit = () => {
     setNewText("");
@@ -25,18 +18,19 @@ function TodoList() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewText(e.currentTarget.value);
   };
+
   const createDeleteHandler = (id: string) => async () => {
     if (!window.confirm("정말로 지우시겠습니까?")) return;
     await deleteTodo(id);
-    revalidator.revalidate();
+    setTodos((todos) => todos.filter((todo) => todo.id !== id));
   };
   const createToggleHandler = (id: string) => async () => {
     const todo = todos.filter((todo) => todo.id === id).pop();
     if (!todo) {
-      throw new Error("아이디에 해당하는 투두 객체가 존재하지 않습니다.");
+      throw new Error("해당 아이디에 해당하는 투두 객체가 존재하지 않습니다.");
     }
     await editTodo(id, { ...todo, isCompleted: !todo.isCompleted });
-    revalidator.revalidate();
+    setTodos((todos) => getToggledTodosById(todos, id));
   };
 
   if (naviagation.state === "loading" || !todos) return <div>loading</div>;
@@ -69,34 +63,13 @@ function TodoList() {
 }
 export default TodoList;
 
-export async function loader({ params }: LoaderFunctionArgs) {
-  console.log("loader on Todolist executed");
-  const { category } = params;
-  if (!category) throw new Error("category params을 찾을 수 없습니다.");
-
-  try {
-    const todos = await getTodosByCategory(category);
-    return todos;
-  } catch (err) {
-    console.log(err);
-  }
+function getToggledTodosById(todos: Todos, id: string) {
+  return todos.map((todo) => {
+    if (todo.id === id) return { ...todo, isCompleted: !todo.isCompleted };
+    return todo;
+  });
 }
-export async function action({ params, request }: ActionFunctionArgs) {
-  console.log("action on Todolist executed");
-  const { category } = params;
-  if (!category) throw new Error("category params을 찾을 수 없습니다.");
 
-  const { method } = request;
-  if (method === "POST") {
-    const formData = await request.formData();
-    const text = formData.get("text");
-
-    if (typeof text !== "string" || text.length === 0) {
-      throw new Error("문자를 입력해주세요");
-    }
-    await addTodo({ category, isCompleted: false, text });
-  }
-}
 const Container = styled.div`
   height: 100%;
   overflow: hidden;
