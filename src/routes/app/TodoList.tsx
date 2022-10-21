@@ -4,18 +4,19 @@ import {
   ActionFunctionArgs,
   Form,
   LoaderFunctionArgs,
-  useLoaderData,
   useNavigation,
   useRevalidator,
 } from "react-router-dom";
 
 import { addTodo, deleteTodo, getTodosByCategory, editTodo } from "@api/todo";
 import TodoItem from "@components/TodoItem";
-import type { Todo } from "../../types/todo.type";
+import useTodos from "@hooks/useTodos";
 
 function TodoList() {
   const [newText, setNewText] = useState("");
-  const todos = useLoaderData() as Todo[];
+  const { todos } = useTodos();
+
+  // const todos = useLoaderData() as Todo[];
   const revalidator = useRevalidator();
   const naviagation = useNavigation();
 
