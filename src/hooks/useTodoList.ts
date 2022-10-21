@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { TodosStateContext } from "@context/todoListContext";
 
-function useTodosState() {
+function useTodoList() {
   return useContext(TodosStateContext);
 }
-export default useTodosState;
+export default useTodoList;
