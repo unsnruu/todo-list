@@ -1,4 +1,4 @@
-import type { Text, UserId, TodoId } from "../types/common";
+import type { Text, UserId, TodoId } from "./common.type";
 import type { Category } from "../types/category.type";
 
 export interface Todo {

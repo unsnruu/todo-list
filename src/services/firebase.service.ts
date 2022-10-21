@@ -11,7 +11,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { COLLECTION_CATEGORY } from "../constant/common";
-import type { UserId } from "../types/common";
+import type { UserId } from "../types/common.type";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
