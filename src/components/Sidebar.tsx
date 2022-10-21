@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
-import useCategory from "@hooks/useCategory";
+
 import StyledLink from "@components/StyledLink";
-import type { Category } from "../types/category.type";
 import useTodosState from "@hooks/useTodoList";
+import type { Category } from "../types/category.type";
 
 function Sidebar() {
   const { categories, setSelectedCategory } = useTodosState();
