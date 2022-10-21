@@ -6,7 +6,7 @@ import type { Category } from "../types/category.type";
 
 function Sidebar() {
   const { categories, setSelectedCategory } = useTodosState();
-  // const { categories } = useCategory();
+
   const createCategoryHandler = (category: Category) => () => {
     setSelectedCategory(category);
   };
