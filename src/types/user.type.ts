@@ -1,3 +1,6 @@
-import type { User } from "firebase/auth";
+import type { User as FirebaseUser, NextOrObserver } from "firebase/auth";
 
-export default User;
+export type User = FirebaseUser | null;
+export interface UserService {
+  getUser(func: NextOrObserver<User>): void;
+}

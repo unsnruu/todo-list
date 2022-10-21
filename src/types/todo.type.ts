@@ -5,7 +5,7 @@ export interface Todo {
   text: Text;
   isCompleted: boolean;
   category: Category;
-  id: UserId;
+  id: TodoId;
 }
 export type Todos = Todo[];
 export type TodoForm = Omit<Todo, "id">;
