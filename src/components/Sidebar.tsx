@@ -1,17 +1,25 @@
 import styled from "@emotion/styled";
 import useCategory from "@hooks/useCategory";
 import StyledLink from "@components/StyledLink";
+import type { Category } from "../types/category.type";
+import useTodosState from "@hooks/useTodosState";
 
 function Sidebar() {
-  const { categories } = useCategory();
+  const { categories, setSelectedCategory } = useTodosState();
+  // const { categories } = useCategory();
+  const createCategoryHandler = (category: Category) => () => {
+    setSelectedCategory(category);
+  };
 
-  if (!categories) return <div>카테고리가 존재하지 않습니다</div>;
+  if (!categories) {
+    return <div>카테고리가 존재하지 않습니다</div>;
+  }
   return (
     <Container>
       <Title>카테고리</Title>
       <LinkList>
         {categories.map((category, idx) => (
-          <li key={idx}>
+          <li key={idx} onClick={createCategoryHandler(category)}>
             <StyledLink to={`todo/${category}`}>{category}</StyledLink>
           </li>
         ))}

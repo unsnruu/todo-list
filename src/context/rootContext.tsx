@@ -1,11 +1,11 @@
 import type { PropsWithChildren } from "react";
-import CategoryProvider from "./categoryContext";
 import TodoProvider from "./todoContext";
+import TodoListProvider from "./todoListContext";
 
 export default function RootProvider({ children }: PropsWithChildren) {
   return (
-    <CategoryProvider>
+    <TodoListProvider>
       <TodoProvider>{children}</TodoProvider>
-    </CategoryProvider>
+    </TodoListProvider>
   );
 }
