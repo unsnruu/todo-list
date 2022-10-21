@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, useNavigation, useRevalidator } from "react-router-dom";
+import { Form, useNavigation } from "react-router-dom";
 import styled from "@emotion/styled";
 
 import { deleteTodo, editTodo } from "@api/todo";
@@ -9,7 +9,6 @@ import type { Todos } from "../../types/todo.type";
 
 function TodoList() {
   const { todos, setTodos } = useTodoList();
-  const revalidator = useRevalidator();
   const naviagation = useNavigation();
 
   const [newText, setNewText] = useState("");
