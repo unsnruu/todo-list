@@ -11,6 +11,7 @@ import SignUp, { action as signupAction } from "@routes/auth/SignUp";
 import AppRoot from "@routes/app/AppRoot";
 import AppHome from "@routes/app/AppHome";
 import TodoList from "@routes/app/TodoList";
+import CategoryEdit from "@routes/app/CategoryEdit";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,6 +24,7 @@ export const router = createBrowserRouter(
       <Route path="app" element={<AppRoot />}>
         <Route index element={<AppHome />} />
         <Route path="todo/:category" element={<TodoList />} />
+        <Route path="category/edit" element={<CategoryEdit />} />
       </Route>
     </Route>
   )
