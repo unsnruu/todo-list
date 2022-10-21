@@ -1,17 +1,18 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
+
 import Header from "@components/Header";
 import StyledLink from "@components/StyledLink";
-import { useNavigate } from "react-router-dom";
-import useUser from "@hooks/useUser";
+import useTodoList from "@hooks/useTodoList";
 
 function Home() {
+  const { user } = useTodoList();
   const navigate = useNavigate();
-  const user = useUser();
 
   useEffect(() => {
     if (user) navigate("/app");
-  }, [navigate, user]);
+  }, [user, navigate]);
 
   return (
     <div>
