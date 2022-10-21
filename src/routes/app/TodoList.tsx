@@ -24,12 +24,12 @@ function TodoList() {
   const createDeleteHandler = (id: string) => async () => {
     if (!window.confirm("정말로 지우시겠습니까?")) return;
     await deleteTodo(id);
-    revalidator.revalidate();
+    setTodos((todos) => todos.filter((todo) => todo.id !== id));
   };
   const createToggleHandler = (id: string) => async () => {
     const todo = todos.filter((todo) => todo.id === id).pop();
     if (!todo) {
-      throw new Error("아이디에 해당하는 투두 객체가 존재하지 않습니다.");
+      throw new Error("해당 아이디에 해당하는 투두 객체가 존재하지 않습니다.");
     }
     await editTodo(id, { ...todo, isCompleted: !todo.isCompleted });
     setTodos((todos) => getToggledTodosById(todos, id));
