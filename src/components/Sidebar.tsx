@@ -5,12 +5,14 @@ import useTodosState from "@hooks/useTodoList";
 import type { Category } from "../types/category.type";
 
 function Sidebar() {
-  const { categories, setSelectedCategory } = useTodosState();
+  const { state, categories, setSelectedCategory } = useTodosState();
 
   const createCategoryHandler = (category: Category) => () => {
     setSelectedCategory(category);
   };
 
+  //? 분기점을 이렇게 설정하는 게 맞을까?
+  if (state === "loading") return <div>로딩중</div>;
   if (!categories) {
     return <div>카테고리가 존재하지 않습니다</div>;
   }
