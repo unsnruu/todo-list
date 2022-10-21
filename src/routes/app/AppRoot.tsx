@@ -2,11 +2,10 @@ import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 import AppLayout from "@components/AppLayout";
-
-import useUser from "@hooks/useUser";
+import useTodoList from "@hooks/useTodoList";
 
 function AppRoot() {
-  const user = useUser();
+  const { user } = useTodoList();
   const navigate = useNavigate();
 
   useEffect(() => {
