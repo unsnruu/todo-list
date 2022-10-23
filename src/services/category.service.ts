@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import { arrayUnion, getDoc, updateDoc } from "firebase/firestore";
 import { getDocRefBy } from "@services/firebase.service";
 
@@ -30,7 +31,7 @@ class CategoryServiceImpl implements CategoryService {
     const docRef = getDocRefBy(COLLECTION_CATEGORY, uid);
 
     await updateDoc(docRef, {
-      categories: arrayUnion(newCategory),
+      categories: arrayUnion({ id: uuidv4(), title: newCategory }),
     });
   }
   async editCategory(): Promise<void> {}
