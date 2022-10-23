@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { ActionFunctionArgs, Form, useNavigation } from "react-router-dom";
 import styled from "@emotion/styled";
 
 import TodoItem from "@components/TodoItem";
@@ -90,7 +89,7 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
-const StyledForm = styled(Form)`
+const StyledForm = styled.form`
   width: 100%;
   background-color: white;
   border-radius: 1rem;
