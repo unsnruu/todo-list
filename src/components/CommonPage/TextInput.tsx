@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
-import type { PropsWithChildren } from "react";
+import type { PropsWithChildren, ChangeEvent } from "react";
 
 interface TextInputProps extends PropsWithChildren {
   placeholder?: string;
+  handleChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 function TextInput({ children, placeholder }: TextInputProps) {
