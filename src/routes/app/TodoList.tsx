@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 
+import TodoList from "@components/TodoList/";
 import TodoItem from "@components/TodoItem";
 import useTodoList from "@hooks/useTodoList";
 import type { Todos, Todo } from "../../types/todo.type";
 import todoService from "@services/todo.service";
 
-function TodoList() {
+function TodoListRoute() {
   const { todos, setTodos, state, user, selectedCategory } = useTodoList();
   const [newText, setNewText] = useState("");
 
@@ -50,19 +51,13 @@ function TodoList() {
   if (state === "loading") return <div>loading</div>;
 
   return (
-    <Container>
-      <StyledForm method="post" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="text"
-          placeholder="✨새로운 할 일을 여기 입력해주세요"
-          value={newText}
-          onChange={handleChange}
-        />
-        <button>추가</button>
-      </StyledForm>
-      <TodoItemContainer>
-        {todos.map(({ id, isCompleted, text }) => (
+    <TodoList>
+      <TodoList.Form handleSubmit={handleSubmit}>
+        <TodoList.TextInput placeholder="✨새로운 할 일을 여기 입력해주세요" />
+        <TodoList.SubmitButton text="제출" />
+      </TodoList.Form>
+      <TodoList.List>
+        {todos.map(({ id, text, isCompleted }) => (
           <TodoItem
             key={id}
             text={text}
@@ -71,11 +66,11 @@ function TodoList() {
             handleToggleCompletion={createToggleHandler(id)}
           />
         ))}
-      </TodoItemContainer>
-    </Container>
+      </TodoList.List>
+    </TodoList>
   );
 }
-export default TodoList;
+export default TodoListRoute;
 
 function getToggledTodosById(todos: Todos, id: string) {
   return todos.map((todo) => {
@@ -83,43 +78,3 @@ function getToggledTodosById(todos: Todos, id: string) {
     return todo;
   });
 }
-
-const Container = styled.div`
-  height: 100%;
-  overflow: hidden;
-`;
-
-const StyledForm = styled.form`
-  width: 100%;
-  background-color: white;
-  border-radius: 1rem;
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
-  & input {
-    border: none;
-    font-size: 1rem;
-    padding: 0.5rem;
-    width: 100%;
-    flex: 5;
-    outline: none;
-  }
-  & input :focus {
-    background-color: transparent;
-  }
-  & button {
-    border: none;
-    background-color: ${({ theme }) => theme.color.secondary};
-    border-radius: 0.5rem;
-    padding: 1rem;
-    flex: 1;
-    cursor: pointer;
-    font-size: 1rem;
-    color: white;
-  }
-`;
-const TodoItemContainer = styled.ul`
-  height: 100%;
-  overflow: scroll;
-`;
