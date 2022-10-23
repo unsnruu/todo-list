@@ -27,6 +27,7 @@ function TodoList() {
       text: newText,
     };
     setTodos((todos) => [...todos, newTodo]);
+    setNewText("");
   };
 
   const createDeleteHandler = (id: string) => async () => {
