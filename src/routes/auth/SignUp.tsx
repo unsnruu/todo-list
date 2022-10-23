@@ -1,15 +1,6 @@
 import { ActionFunctionArgs, Form, redirect } from "react-router-dom";
 import { signUp } from "@api/auth";
 
-export async function action({ request }: ActionFunctionArgs) {
-  let formData = await request.formData();
-  const { email, password } = Object.fromEntries(formData);
-  if (typeof email !== "string" || typeof password !== "string") return;
-
-  await signUp({ email, password });
-  return redirect("/");
-}
-
 function SignUp() {
   return (
     <div>
@@ -27,6 +18,15 @@ function SignUp() {
       </Form>
     </div>
   );
+}
+
+export async function action({ request }: ActionFunctionArgs) {
+  let formData = await request.formData();
+  const { email, password } = Object.fromEntries(formData);
+  if (typeof email !== "string" || typeof password !== "string") return;
+
+  await signUp({ email, password });
+  return redirect("/");
 }
 
 export default SignUp;
