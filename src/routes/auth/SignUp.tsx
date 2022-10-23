@@ -14,10 +14,10 @@ function SignUp() {
   return (
     <div>
       <h1>회원가입</h1>
-      <Form aria-label="회원가입">
+      <Form aria-label="회원가입" method="post">
         <label>
           이메일
-          <input type="text" name="d" />
+          <input type="text" name="email" />
         </label>
         <label>
           비밀번호
