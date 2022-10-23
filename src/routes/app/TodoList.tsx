@@ -1,27 +1,37 @@
 import React, { useState } from "react";
-import { Form, useNavigation } from "react-router-dom";
+import { ActionFunctionArgs, Form, useNavigation } from "react-router-dom";
 import styled from "@emotion/styled";
 
-import { deleteTodo, editTodo } from "@api/todo";
 import TodoItem from "@components/TodoItem";
 import useTodoList from "@hooks/useTodoList";
-import type { Todos } from "../../types/todo.type";
+import type { Todos, Todo } from "../../types/todo.type";
+import todoService from "@services/todo.service";
 
 function TodoList() {
-  const { todos, setTodos, state } = useTodoList();
-  const naviagation = useNavigation();
+  const { todos, setTodos, state, user, selectedCategory } = useTodoList();
   const [newText, setNewText] = useState("");
 
-  const handleSubmit = () => {
-    setNewText("");
-  };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewText(e.currentTarget.value);
+  };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!selectedCategory) return;
+    const id = await todoService.addTodo(newText, selectedCategory, user);
+    if (!id) throw new Error("새로운 투두를 생성하는데 문제가 발생했습니다.");
+    const newTodo: Todo = {
+      category: selectedCategory,
+      id,
+      isCompleted: false,
+      text: newText,
+    };
+    setTodos((todos) => [...todos, newTodo]);
   };
 
   const createDeleteHandler = (id: string) => async () => {
     if (!window.confirm("정말로 지우시겠습니까?")) return;
-    await deleteTodo(id);
+    await todoService.deleteTodo(id, user);
     setTodos((todos) => todos.filter((todo) => todo.id !== id));
   };
   const createToggleHandler = (id: string) => async () => {
@@ -29,11 +39,15 @@ function TodoList() {
     if (!todo) {
       throw new Error("해당 아이디에 해당하는 투두 객체가 존재하지 않습니다.");
     }
-    await editTodo(id, { ...todo, isCompleted: !todo.isCompleted });
+    await todoService.editTodo(
+      id,
+      { ...todo, isCompleted: !todo.isCompleted },
+      user
+    );
     setTodos((todos) => getToggledTodosById(todos, id));
   };
 
-  if (naviagation.state === "loading" || !todos) return <div>loading</div>;
+  if (state === "loading") return <div>loading</div>;
 
   return (
     <Container>

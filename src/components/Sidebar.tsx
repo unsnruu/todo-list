@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { MdMiscellaneousServices } from "react-icons/md";
 
 import StyledLink from "@components/StyledLink";
 import useTodosState from "@hooks/useTodoList";
@@ -7,9 +8,11 @@ import type { Category } from "../types/category.type";
 function Sidebar() {
   const { state, categories, setSelectedCategory } = useTodosState();
 
-  const createCategoryHandler = (category: Category) => () => {
-    setSelectedCategory(category);
-  };
+  const createCategoryHandler =
+    ({ title }: Category) =>
+    () => {
+      setSelectedCategory(title);
+    };
 
   //? 분기점을 이렇게 설정하는 게 맞을까?
   if (state === "loading") return <div>로딩중</div>;
@@ -22,10 +25,15 @@ function Sidebar() {
       <LinkList>
         {categories.map((category, idx) => (
           <li key={idx} onClick={createCategoryHandler(category)}>
-            <StyledLink to={`todo/${category}`}>{category}</StyledLink>
+            <StyledLink to={`todo/${category.title}`}>
+              {category.title}
+            </StyledLink>
           </li>
         ))}
       </LinkList>
+      <StyledLink to="category/edit">
+        <MdMiscellaneousServices />
+      </StyledLink>
     </Container>
   );
 }
@@ -53,4 +61,13 @@ const LinkList = styled.ul`
     padding-left: 0;
     margin-left: 0;
   }
+`;
+const Configuration = styled.div`
+  padding: 1rem;
+  width: 100%;
+  height: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
 `;

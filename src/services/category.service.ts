@@ -9,7 +9,7 @@ import { COLLECTION_CATEGORY } from "../constant/common";
 type DocReturn = { categories: Categories };
 
 class CategoryServiceImpl implements CategoryService {
-  async getCategories(user: User): Promise<Categories> {
+  async getCategories(user: User): Promise<Categories | null> {
     if (!user) return null;
 
     const { uid } = user;

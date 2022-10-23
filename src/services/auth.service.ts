@@ -10,6 +10,8 @@ import { COLLECTION_CATEGORY } from "../constant/common";
 
 class AuthService {
   async signUp(email: string, password: string) {
+    console.log("executed signup");
+
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
