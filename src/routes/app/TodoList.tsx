@@ -53,6 +53,7 @@ function TodoListRoute() {
 
   return (
     <Page>
+      <Page.Title text={selectedCategory || ""} />
       <Page.Form handleSubmit={handleSubmit}>
         <Page.TextInput
           handleChange={handleChange}
