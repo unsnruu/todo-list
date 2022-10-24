@@ -3,11 +3,15 @@ import type { PropsWithChildren, ChangeEvent } from "react";
 
 interface TextInputProps extends PropsWithChildren {
   placeholder?: string;
-  handleChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-function TextInput({ children, placeholder }: TextInputProps) {
-  return <Input placeholder={placeholder}>{children}</Input>;
+function TextInput({ children, placeholder, handleChange }: TextInputProps) {
+  return (
+    <Input placeholder={placeholder} onChange={handleChange}>
+      {children}
+    </Input>
+  );
 }
 export default TextInput;
 

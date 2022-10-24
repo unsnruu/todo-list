@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import type { PropsWithChildren, FormEvent } from "react";
 
 interface FormProps extends PropsWithChildren {
-  handleSubmit?: (e: FormEvent<HTMLFormElement>) => void;
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
 }
 function Form({ children, handleSubmit }: FormProps) {
   return <StyledForm onSubmit={handleSubmit}>{children}</StyledForm>;
