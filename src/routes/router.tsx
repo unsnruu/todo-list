@@ -24,7 +24,7 @@ export const router = createBrowserRouter(
       <Route path="app" element={<AppRoot />}>
         <Route index element={<AppHome />} />
         <Route path="todo/:category" element={<TodoList />} />
-        <Route path="category/edit" element={<CategoryEdit />} />
+        <Route path="category" element={<CategoryEdit />} />
       </Route>
     </Route>
   )

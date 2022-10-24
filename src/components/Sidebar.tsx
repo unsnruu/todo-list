@@ -31,7 +31,7 @@ function Sidebar() {
           </li>
         ))}
       </LinkList>
-      <StyledLink to="category/edit">
+      <StyledLink to="category">
         <MdMiscellaneousServices />
       </StyledLink>
     </Container>
