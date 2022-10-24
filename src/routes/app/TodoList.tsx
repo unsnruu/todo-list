@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import styled from "@emotion/styled";
 
-import TodoList from "@components/TodoList/";
+import Page from "@components/CommonPage";
 import TodoItem from "@components/TodoItem";
 import useTodoList from "@hooks/useTodoList";
-import type { Todos, Todo } from "../../types/todo.type";
 import todoService from "@services/todo.service";
+import type { Todos } from "../../types/todo.type";
+import { createTodo } from "../../utils/createTodo";
 
 function TodoListRoute() {
   const { todos, setTodos, state, user, selectedCategory } = useTodoList();
@@ -16,16 +16,17 @@ function TodoListRoute() {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (!selectedCategory) return;
+
     const id = await todoService.addTodo(newText, selectedCategory, user);
     if (!id) throw new Error("새로운 투두를 생성하는데 문제가 발생했습니다.");
-    const newTodo: Todo = {
-      category: selectedCategory,
+
+    const newTodo = createTodo({
       id,
+      category: selectedCategory,
       isCompleted: false,
       text: newText,
-    };
+    });
     setTodos((todos) => [...todos, newTodo]);
     setNewText("");
   };
@@ -51,23 +52,27 @@ function TodoListRoute() {
   if (state === "loading") return <div>loading</div>;
 
   return (
-    <TodoList>
-      <TodoList.Form handleSubmit={handleSubmit}>
-        <TodoList.TextInput placeholder="✨새로운 할 일을 여기 입력해주세요" />
-        <TodoList.SubmitButton text="제출" />
-      </TodoList.Form>
-      <TodoList.List>
+    <Page>
+      <Page.Form handleSubmit={handleSubmit}>
+        <Page.TextInput
+          handleChange={handleChange}
+          placeholder="✨새로운 할 일을 여기 입력해주세요"
+        />
+        <Page.SubmitButton text="제출" />
+      </Page.Form>
+      <Page.List>
         {todos.map(({ id, text, isCompleted }) => (
           <TodoItem
             key={id}
             text={text}
             isCompleted={isCompleted}
-            handleDelete={createDeleteHandler(id)}
-            handleToggleCompletion={createToggleHandler(id)}
+            handleClickDelete={createDeleteHandler(id)}
+            handleClickToggle={createToggleHandler(id)}
+            handleClickEdit={() => {}}
           />
         ))}
-      </TodoList.List>
-    </TodoList>
+      </Page.List>
+    </Page>
   );
 }
 export default TodoListRoute;
