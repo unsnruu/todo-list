@@ -8,7 +8,10 @@ export type Categories = Category[];
 
 export interface CategoryService {
   getCategories(user: User): Promise<Categories | null>;
-  addCategory(user: User, newCategory: CategoryTitle): Promise<void>;
+  addCategory(
+    newCategory: CategoryTitle,
+    user: User
+  ): Promise<CategoryId | null>;
   editCategory(): Promise<void>;
-  deleteCategory(): Promise<void>;
+  deleteCategory(category: Category, user: User): Promise<CategoryId>;
 }
