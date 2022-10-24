@@ -7,7 +7,7 @@ import CategoryItem from "@components/CategoryItem";
 import type { FormEvent, ChangeEvent } from "react";
 import type { Category, CategoryId } from "src/types/category.type";
 
-function CategoryEdit() {
+function CategoryList() {
   const { categories, setCategories, user, state } = useTodoList();
   const [title, setTitle] = useState("");
 
@@ -64,4 +64,4 @@ function CategoryEdit() {
   );
 }
 
-export default CategoryEdit;
+export default CategoryList;
