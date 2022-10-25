@@ -5,7 +5,7 @@ import { User } from "./user.type";
 export interface Todo {
   text: Text;
   isCompleted: boolean;
-  category: CategoryId;
+  categoryId: CategoryId;
   id: TodoId;
 }
 export type Todos = Todo[];
