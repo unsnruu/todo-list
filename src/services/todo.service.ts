@@ -14,7 +14,7 @@ import { User } from "src/types/user.type";
 
 import type { Todo, Todos, TodoForm, TodoService } from "../types/todo.type";
 
-import { db, getUserId } from "./firebase.service";
+import { db } from "./firebase.service";
 
 class TodoServiceImpl implements TodoService {
   async getTodosByCategory(
@@ -39,13 +39,13 @@ class TodoServiceImpl implements TodoService {
   }
   async addTodo(
     newTodo: string,
-    category: string,
+    categoryId: string,
     user: User
   ): Promise<TodoId | null> {
     if (!user) return null;
     const result = await addDoc(collection(db, user.uid), {
       text: newTodo,
-      category: category,
+      categoryId,
       isCompleted: false,
     });
     return result.id;
@@ -57,7 +57,8 @@ class TodoServiceImpl implements TodoService {
     await setDoc(todoRef, todo);
   }
   async deleteTodo(id: string, user: User): Promise<void> {
-    const uid = getUserId();
+    if (!user) throw new Error("no user has found");
+    const { uid } = user;
     const todoRef = doc(db, uid, id);
     await deleteDoc(todoRef);
   }
