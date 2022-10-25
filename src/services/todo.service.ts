@@ -9,12 +9,10 @@ import {
   setDoc,
   CollectionReference,
 } from "firebase/firestore";
-import { TodoId } from "src/types/common.type";
+
 import { User } from "src/types/user.type";
-
-import type { Todo, Todos, TodoForm, TodoService } from "../types/todo.type";
-
 import { db } from "./firebase.service";
+import type { Todo, Todos, TodoForm, TodoService } from "../types/todo.type";
 
 class TodoServiceImpl implements TodoService {
   async getTodosByCategory({
