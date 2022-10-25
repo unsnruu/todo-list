@@ -15,7 +15,7 @@ export interface CategoryService {
   ): Promise<CategoryId | null>;
   editCategory(
     category: Category,
-    newTitle: CategoryTitle,
+    newCategoryTitle: CategoryTitle,
     user: User
   ): Promise<void>;
   deleteCategory(category: Category, user: User): Promise<CategoryId>;
