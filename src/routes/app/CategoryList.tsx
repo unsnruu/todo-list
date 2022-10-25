@@ -5,10 +5,10 @@ import CommonPage from "@components/CommonPage";
 import CategoryItem from "@components/CategoryItem";
 
 import type { FormEvent, ChangeEvent } from "react";
-import type { Category, CategoryId } from "src/types/category.type";
+import type { Category } from "src/types/category.type";
 
 function CategoryList() {
-  const { categories, setCategories, user, state } = useTodoList();
+  const { categories, setCategories, user } = useTodoList();
   const [title, setTitle] = useState("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -25,11 +25,6 @@ function CategoryList() {
   };
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value);
-  };
-  const handleEdit = () => {
-    //카테고리 서버상에서 수정
-    categoryService.editCategory();
-    //카테고리 로컬상에서 수정
   };
 
   const createDeleteHandler = (category: Category) => async () => {
@@ -54,9 +49,9 @@ function CategoryList() {
         {categories.map(({ id, title }) => (
           <CategoryItem
             key={id}
+            id={id}
             text={title}
             handleDelete={createDeleteHandler({ id, title })}
-            handleEdit={handleEdit}
           />
         ))}
       </CommonPage.List>
