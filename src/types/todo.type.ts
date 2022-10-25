@@ -14,7 +14,7 @@ export type TodoForm = Omit<Todo, "id">;
 //user을 TodoService가 품는 방법은 없을까방
 export interface TodoService {
   getTodosByCategory(
-    selectedCategroy: CategoryTitle,
+    selectedCategory: CategoryTitle,
     user: User
   ): Promise<Todos | null>;
   addTodo(
