@@ -30,7 +30,7 @@ function TodoItem({
       <CommonListItem.Text text={text} />
       <CommonListItem.Icons>
         <Link to={`/app/edit/todo/${selectedCategory}/${id}`}>
-          <MdModeEdit onClick={handleClickEdit} />
+          <MdModeEdit />
         </Link>
         <MdDelete onClick={handleClickDelete} />
       </CommonListItem.Icons>
