@@ -65,11 +65,11 @@ function TodoListRoute() {
         {todos.map(({ id, text, isCompleted }) => (
           <TodoItem
             key={id}
+            id={id}
             text={text}
             isCompleted={isCompleted}
             handleClickDelete={createDeleteHandler(id)}
             handleClickToggle={createToggleHandler(id)}
-            handleClickEdit={() => {}}
           />
         ))}
       </Page.List>
