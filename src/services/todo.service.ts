@@ -51,7 +51,8 @@ class TodoServiceImpl implements TodoService {
     return result.id;
   }
   async editTodo(id: string, todo: TodoForm, user: User): Promise<void> {
-    const uid = getUserId();
+    if (!user) throw new Error("no user has found");
+    const { uid } = user;
     const todoRef = doc(db, uid, id);
     await setDoc(todoRef, todo);
   }

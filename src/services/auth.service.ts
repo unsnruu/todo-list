@@ -10,8 +10,6 @@ import { COLLECTION_CATEGORY } from "../constant/common";
 
 class AuthService {
   async signUp(email: string, password: string) {
-    console.log("executed signup");
-
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
@@ -21,8 +19,9 @@ class AuthService {
     const { uid } = user;
     //회원 가입과 동시에 유저의 카테고리 정보 초기화
     const docRef = getDocRefBy(COLLECTION_CATEGORY, uid);
+    const categoryId = uuidv4();
     await setDoc(docRef, {
-      categories: [{ id: uuidv4(), title: "할 일" }],
+      [categoryId]: "할 일",
     });
   }
   async logIn(email: string, password: string) {
