@@ -3,13 +3,13 @@ import styled from "@emotion/styled";
 
 import Header from "@components/Header";
 import Sidebar from "@components/Sidebar";
-import { logOut } from "@api/auth";
 
 import { redirect } from "react-router-dom";
+import authService from "@services/auth.service";
 
 function AppLayout({ children }: PropsWithChildren) {
   const handleClickLogout = () => {
-    logOut();
+    authService.logOut();
     redirect("/");
   };
   return (
