@@ -10,7 +10,6 @@ import {
   CollectionReference,
 } from "firebase/firestore";
 
-import { User } from "src/types/user.type";
 import { auth, db } from "./firebase.service";
 import type { Todo, Todos, TodoForm, TodoService } from "../types/todo.type";
 import { Auth } from "firebase/auth";
@@ -68,13 +67,7 @@ class TodoServiceImpl implements TodoService {
     const todoRef = doc(db, uid, todoId);
     await setDoc(todoRef, todo);
   }
-  async deleteTodo({
-    todoId,
-    user,
-  }: {
-    todoId: string;
-    user: User;
-  }): Promise<void> {
+  async deleteTodo({ todoId }: { todoId: string }): Promise<void> {
     if (!this.auth.currentUser) return;
     const { uid } = this.auth.currentUser;
     const todoRef = doc(db, uid, todoId);

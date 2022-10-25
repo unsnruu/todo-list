@@ -9,7 +9,6 @@ import type {
   Categories,
   Category,
 } from "../types/category.type";
-import type { User } from "../types/user.type";
 import type { Auth } from "firebase/auth";
 
 type CategoryDocReturn = { [id: string]: string };
@@ -19,7 +18,7 @@ class CategoryServiceImpl implements CategoryService {
   constructor(auth: Auth) {
     this.auth = auth;
   }
-  async getCategories(user: User): Promise<Categories | null> {
+  async getCategories(): Promise<Categories | null> {
     if (!this.auth.currentUser) return null;
     const { uid } = this.auth.currentUser;
     const docSnap = await getDoc(
