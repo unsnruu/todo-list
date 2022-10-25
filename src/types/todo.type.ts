@@ -14,13 +14,10 @@ export type TodoForm = Omit<Todo, "id">;
 //user을 TodoService가 품는 방법은 없을까방
 //todo : user객체를 다루는 방식을 변경할 것
 export interface TodoService {
-  getTodosByCategory(
-    selectedCategory: CategoryId,
-    user: User
-  ): Promise<Todos | null>;
+  getTodosByCategory(categoryId: CategoryId, user: User): Promise<Todos | null>;
   addTodo(
     newTodoText: string,
-    category: CategoryId,
+    categoryId: CategoryId,
     user: User
   ): Promise<TodoId | null>;
   editTodo(todoId: TodoId, todo: TodoForm, user: User): Promise<void>;
