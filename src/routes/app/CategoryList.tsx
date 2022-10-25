@@ -15,7 +15,10 @@ function CategoryList() {
     e.preventDefault();
     if (title.length < 0) throw new Error("글자를 입력하세요");
 
-    const id = await categoryService.addCategory(title, user);
+    const id = await categoryService.addCategory({
+      newCategoryTitle: title,
+      user,
+    });
     if (!id) throw new Error("새로운 카테고리 생성에 실패하였습니다.");
 
     setCategories((prev) => {
@@ -28,7 +31,7 @@ function CategoryList() {
   };
 
   const createDeleteHandler = (category: Category) => async () => {
-    const id = await categoryService.deleteCategory(category, user);
+    const id = await categoryService.deleteCategory({ category, user });
     setCategories((categories) => {
       if (!categories) return null;
       return categories.filter((category) => category.id !== id);

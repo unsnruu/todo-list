@@ -1,5 +1,5 @@
+import authService from "@services/auth.service";
 import { Form, ActionFunctionArgs, redirect } from "react-router-dom";
-import { logIn } from "@api/auth";
 
 function Login() {
   return (
@@ -28,6 +28,6 @@ export async function action({ request }: ActionFunctionArgs) {
 
   if (typeof email !== "string" || typeof password !== "string") return;
 
-  await logIn({ email, password });
+  await authService.logIn(email, password);
   return redirect("/");
 }

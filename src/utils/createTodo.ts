@@ -4,10 +4,10 @@ import { Todo } from "../types/todo.type";
 
 interface Props {
   id: TodoId;
-  category: CategoryTitle;
+  categoryId: CategoryTitle;
   isCompleted: boolean;
   text: Text;
 }
-export function createTodo({ id, category, isCompleted, text }: Props): Todo {
-  return { id, category, isCompleted, text };
+export function createTodo({ id, categoryId, isCompleted, text }: Props): Todo {
+  return { id, categoryId, isCompleted, text };
 }

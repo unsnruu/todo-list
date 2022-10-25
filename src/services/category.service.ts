@@ -1,23 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
-import {
-  arrayRemove,
-  arrayUnion,
-  deleteDoc,
-  getDoc,
-  updateDoc,
-  deleteField,
-} from "firebase/firestore";
+import { getDoc, updateDoc, deleteField } from "firebase/firestore";
 import { getDocRefBy } from "@services/firebase.service";
 
 import { COLLECTION_CATEGORY } from "../constant/common";
 import type {
   CategoryService,
   Categories,
-  CategoryId,
   Category,
 } from "../types/category.type";
 import type { User } from "../types/user.type";
-import { Todos } from "src/types/todo.type";
 import todoService from "./todo.service";
 
 type CategoryDocReturn = { [id: string]: string };
@@ -35,10 +26,13 @@ class CategoryServiceImpl implements CategoryService {
     const entries = Object.entries(results);
     return entries.map(([id, title]) => ({ id, title }));
   }
-  async addCategory(
-    newCategoryTitle: string,
-    user: User
-  ): Promise<CategoryId | null> {
+  async addCategory({
+    newCategoryTitle,
+    user,
+  }: {
+    newCategoryTitle: string;
+    user: User;
+  }): Promise<string | null> {
     if (!user) return null;
 
     const { uid } = user;
@@ -50,33 +44,48 @@ class CategoryServiceImpl implements CategoryService {
     });
     return newCategoryId;
   }
-  async editCategory(
-    category: Category,
-    newTitle: string,
-    user: User
-  ): Promise<void> {
+  /**
+   * editCategory 로직을 손봐야 할 듯.
+   * 너무 복잡해졌다.
+   */
+  async editCategory({
+    category,
+    newCategoryTitle,
+    user,
+  }: {
+    category: Category;
+    newCategoryTitle: string;
+    user: User;
+  }): Promise<void> {
     if (!user) throw new Error("no user");
     const { uid } = user;
     const categroyRef = getDocRefBy(COLLECTION_CATEGORY, uid);
-    //기존 카테고리로 변경
+
     await updateDoc(categroyRef, {
-      [category.id]: newTitle,
+      [category.id]: newCategoryTitle,
     });
-    // 기존 카테고리에 있었던 모든 Todos를 일괄 수정
-    // 1.카테고리에 해당하는 모든 투두를 읽어온다.
-    // 2.투두를 업데이트한다.
-    // ? 캐쉬를 사용할 수는 없을까
-    // 어떻게 하면 효율적으로 작성할 수 있을까
-    const todos = await todoService.getTodosByCategory(category.title, user);
+
+    const todos = await todoService.getTodosByCategory({
+      categoryId: category.id,
+      user,
+    });
+    if (!todos) return;
+
     todos.forEach(async (todo) => {
-      await todoService.editTodo(
-        todo.id,
-        { ...todo, category: newTitle },
-        user
-      );
+      await todoService.editTodo({
+        todoId: todo.id,
+        user,
+        todo: { ...todo, categoryId: category.id },
+      });
     });
   }
-  async deleteCategory(category: Category, user: User): Promise<string> {
+  async deleteCategory({
+    category,
+    user,
+  }: {
+    category: Category;
+    user: User;
+  }): Promise<string> {
     if (!user) throw new Error("no user");
     const { uid } = user;
     const categoryRef = getDocRefBy(COLLECTION_CATEGORY, uid);

@@ -24,7 +24,11 @@ function CategoryEdit() {
     if (!newTitle) throw new Error("텍스트가 존재하지 않습니다.");
     if (!curCategory) throw new Error("카테고리가 존재하지 않습니다.");
 
-    await categoryService.editCategory(curCategory, newTitle, user);
+    await categoryService.editCategory({
+      category: curCategory,
+      newCategoryTitle: newTitle,
+      user,
+    });
     setCategories((categories) => {
       if (!categories) return null;
       return categories.map((category) =>

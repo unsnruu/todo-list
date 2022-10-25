@@ -9,7 +9,7 @@ import type { Todos } from "../types/todo.type";
 import type { Categories, Category } from "../types/category.type";
 import type { FetchingState } from "../types/common.type";
 
-type SelectedCategory = null | string;
+type SelectedCategory = Category | null;
 interface TodosState {
   selectedCategory: SelectedCategory;
   categories: Categories | null;
@@ -59,10 +59,11 @@ function TodosStateProvider({ children }: PropsWithChildren) {
     const fetchTodos = async () => {
       if (!selectedCategory) return;
       setState("loading");
-      const todos = await todoService.getTodosByCategory(
-        selectedCategory,
-        user
-      );
+      const todos = await todoService.getTodosByCategory({
+        categoryId: selectedCategory.id,
+        user,
+      });
+      if (!todos) return;
       setTodos(todos);
       setState("idle");
     };
