@@ -21,7 +21,6 @@ function TodoListRoute() {
     const id = await todoService.addTodo({
       newTodoText: newText,
       categoryId: selectedCategory.id,
-      user,
     });
     if (!id) throw new Error("새로운 투두를 생성하는데 문제가 발생했습니다.");
 
@@ -48,7 +47,6 @@ function TodoListRoute() {
     await todoService.editTodo({
       todoId: id,
       todo: { ...todo, isCompleted: !todo.isCompleted },
-      user,
     });
     setTodos((todos) => getToggledTodosById(todos, id));
   };

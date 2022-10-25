@@ -67,14 +67,12 @@ class CategoryServiceImpl implements CategoryService {
 
     const todos = await todoService.getTodosByCategory({
       categoryId: category.id,
-      user,
     });
     if (!todos) return;
 
     todos.forEach(async (todo) => {
       await todoService.editTodo({
         todoId: todo.id,
-        user,
         todo: { ...todo, categoryId: category.id },
       });
     });

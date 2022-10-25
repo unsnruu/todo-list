@@ -61,7 +61,6 @@ function TodosStateProvider({ children }: PropsWithChildren) {
       setState("loading");
       const todos = await todoService.getTodosByCategory({
         categoryId: selectedCategory.id,
-        user,
       });
       if (!todos) return;
       setTodos(todos);

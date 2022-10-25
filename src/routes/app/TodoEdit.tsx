@@ -20,7 +20,6 @@ function TodoEdit() {
     await todoService.editTodo({
       todoId: id,
       todo: { ...curTodo, text: newText },
-      user,
     });
     setTodos((todos) =>
       todos.map((todo) => (todo.id === id ? { ...todo, text: newText } : todo))
