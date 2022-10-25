@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { getDoc, updateDoc, deleteField } from "firebase/firestore";
-import { createDocRefBy } from "@services/firebase.service";
+import { auth, createDocRefBy } from "@services/firebase.service";
+import todoService from "./todo.service";
 
 import { COLLECTION_CATEGORY } from "../constant/common";
 import type {
@@ -9,14 +10,18 @@ import type {
   Category,
 } from "../types/category.type";
 import type { User } from "../types/user.type";
-import todoService from "./todo.service";
+import type { Auth } from "firebase/auth";
 
 type CategoryDocReturn = { [id: string]: string };
 
 class CategoryServiceImpl implements CategoryService {
+  auth: Auth;
+  constructor(auth: Auth) {
+    this.auth = auth;
+  }
   async getCategories(user: User): Promise<Categories | null> {
-    if (!user) return null;
-    const { uid } = user;
+    if (!this.auth.currentUser) return null;
+    const { uid } = this.auth.currentUser;
     const docSnap = await getDoc(
       createDocRefBy<CategoryDocReturn>(COLLECTION_CATEGORY, uid)
     );
@@ -28,14 +33,11 @@ class CategoryServiceImpl implements CategoryService {
   }
   async addCategory({
     newCategoryTitle,
-    user,
   }: {
     newCategoryTitle: string;
-    user: User;
   }): Promise<string | null> {
-    if (!user) return null;
-
-    const { uid } = user;
+    if (!this.auth.currentUser) return null;
+    const { uid } = this.auth.currentUser;
     const categoryRef = createDocRefBy(COLLECTION_CATEGORY, uid);
 
     const newCategoryId = uuidv4();
@@ -44,21 +46,16 @@ class CategoryServiceImpl implements CategoryService {
     });
     return newCategoryId;
   }
-  /**
-   * editCategory 로직을 손봐야 할 듯.
-   * 너무 복잡해졌다.
-   */
+
   async editCategory({
     category,
     newCategoryTitle,
-    user,
   }: {
     category: Category;
     newCategoryTitle: string;
-    user: User;
   }): Promise<void> {
-    if (!user) throw new Error("no user");
-    const { uid } = user;
+    if (!this.auth.currentUser) return;
+    const { uid } = this.auth.currentUser;
     const categroyRef = createDocRefBy(COLLECTION_CATEGORY, uid);
 
     await updateDoc(categroyRef, {
@@ -77,15 +74,9 @@ class CategoryServiceImpl implements CategoryService {
       });
     });
   }
-  async deleteCategory({
-    category,
-    user,
-  }: {
-    category: Category;
-    user: User;
-  }): Promise<string> {
-    if (!user) throw new Error("no user");
-    const { uid } = user;
+  async deleteCategory({ category }: { category: Category }): Promise<string> {
+    if (!this.auth.currentUser) throw new Error("no user has found");
+    const { uid } = this.auth.currentUser;
     const categoryRef = createDocRefBy(COLLECTION_CATEGORY, uid);
     await updateDoc(categoryRef, {
       [category.id]: deleteField(),
@@ -93,4 +84,4 @@ class CategoryServiceImpl implements CategoryService {
     return category.id;
   }
 }
-export default new CategoryServiceImpl();
+export default new CategoryServiceImpl(auth);
