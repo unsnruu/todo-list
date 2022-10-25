@@ -1,12 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import {
-  arrayRemove,
-  arrayUnion,
-  deleteDoc,
-  getDoc,
-  updateDoc,
-  deleteField,
-} from "firebase/firestore";
+import { getDoc, updateDoc, deleteField } from "firebase/firestore";
 import { getDocRefBy } from "@services/firebase.service";
 
 import { COLLECTION_CATEGORY } from "../constant/common";
@@ -17,7 +10,6 @@ import type {
   Category,
 } from "../types/category.type";
 import type { User } from "../types/user.type";
-import { Todos } from "src/types/todo.type";
 import todoService from "./todo.service";
 
 type CategoryDocReturn = { [id: string]: string };
