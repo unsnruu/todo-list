@@ -12,6 +12,7 @@ export type Todos = Todo[];
 export type TodoForm = Omit<Todo, "id">;
 
 //user을 TodoService가 품는 방법은 없을까방
+//todo : user객체를 다루는 방식을 변경할 것
 export interface TodoService {
   getTodosByCategory(
     selectedCategory: CategoryTitle,
