@@ -18,10 +18,10 @@ export interface TodoService {
     user: User
   ): Promise<Todos | null>;
   addTodo(
-    newTodo: string,
+    newTodoText: string,
     category: CategoryTitle,
     user: User
   ): Promise<TodoId | null>;
-  editTodo(id: TodoId, todo: TodoForm, user: User): Promise<void>;
-  deleteTodo(id: TodoId, user: User): Promise<void>;
+  editTodo(todoId: TodoId, todo: TodoForm, user: User): Promise<void>;
+  deleteTodo(todoId: TodoId, user: User): Promise<void>;
 }
