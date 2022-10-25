@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { getDoc, updateDoc, deleteField } from "firebase/firestore";
-import { getDocRefBy } from "@services/firebase.service";
+import { createDocRefBy } from "@services/firebase.service";
 
 import { COLLECTION_CATEGORY } from "../constant/common";
 import type {
@@ -18,7 +18,7 @@ class CategoryServiceImpl implements CategoryService {
     if (!user) return null;
     const { uid } = user;
     const docSnap = await getDoc(
-      getDocRefBy<CategoryDocReturn>(COLLECTION_CATEGORY, uid)
+      createDocRefBy<CategoryDocReturn>(COLLECTION_CATEGORY, uid)
     );
     if (!docSnap.exists()) return null;
 
@@ -36,7 +36,7 @@ class CategoryServiceImpl implements CategoryService {
     if (!user) return null;
 
     const { uid } = user;
-    const categoryRef = getDocRefBy(COLLECTION_CATEGORY, uid);
+    const categoryRef = createDocRefBy(COLLECTION_CATEGORY, uid);
 
     const newCategoryId = uuidv4();
     await updateDoc(categoryRef, {
@@ -59,7 +59,7 @@ class CategoryServiceImpl implements CategoryService {
   }): Promise<void> {
     if (!user) throw new Error("no user");
     const { uid } = user;
-    const categroyRef = getDocRefBy(COLLECTION_CATEGORY, uid);
+    const categroyRef = createDocRefBy(COLLECTION_CATEGORY, uid);
 
     await updateDoc(categroyRef, {
       [category.id]: newCategoryTitle,
@@ -88,7 +88,7 @@ class CategoryServiceImpl implements CategoryService {
   }): Promise<string> {
     if (!user) throw new Error("no user");
     const { uid } = user;
-    const categoryRef = getDocRefBy(COLLECTION_CATEGORY, uid);
+    const categoryRef = createDocRefBy(COLLECTION_CATEGORY, uid);
     await updateDoc(categoryRef, {
       [category.id]: deleteField(),
     });

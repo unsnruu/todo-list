@@ -11,10 +11,14 @@ import {
 } from "firebase/firestore";
 
 import { User } from "src/types/user.type";
-import { db } from "./firebase.service";
+import { auth, db } from "./firebase.service";
 import type { Todo, Todos, TodoForm, TodoService } from "../types/todo.type";
 
 class TodoServiceImpl implements TodoService {
+  user: User;
+  constructor(user: User) {
+    this.user = user;
+  }
   async getTodosByCategory({
     categoryId,
     user,
@@ -63,7 +67,7 @@ class TodoServiceImpl implements TodoService {
     todoId: string;
     todo: TodoForm;
     user: User;
-  }): Promise<void> {
+  }) {
     if (!user) throw new Error("no user has found");
     const { uid } = user;
     const todoRef = doc(db, uid, todoId);
@@ -83,4 +87,5 @@ class TodoServiceImpl implements TodoService {
   }
 }
 
-export default new TodoServiceImpl();
+const { currentUser } = auth;
+export default new TodoServiceImpl(currentUser);
