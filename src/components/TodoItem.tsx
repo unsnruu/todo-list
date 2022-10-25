@@ -1,22 +1,26 @@
+import { Link } from "react-router-dom";
 import { MdDelete, MdModeEdit } from "react-icons/md";
 import CommonListItem from "./CommonListItem";
 import type { MouseEvent } from "react";
+import useTodoList from "@hooks/useTodoList";
 
 interface TodoItemProps {
+  id: string;
   text: string;
   isCompleted: boolean;
   handleClickToggle: (e: MouseEvent<HTMLButtonElement>) => void;
-  handleClickEdit: () => void;
   handleClickDelete: () => void;
 }
 
 function TodoItem({
   text,
+  id,
   isCompleted,
   handleClickToggle,
-  handleClickEdit,
   handleClickDelete,
 }: TodoItemProps) {
+  const { selectedCategory } = useTodoList();
+
   return (
     <CommonListItem>
       <CommonListItem.Completion
@@ -25,7 +29,9 @@ function TodoItem({
       />
       <CommonListItem.Text text={text} />
       <CommonListItem.Icons>
-        <MdModeEdit onClick={handleClickEdit} />
+        <Link to={`/app/edit/todo/${selectedCategory}/${id}`}>
+          <MdModeEdit onClick={handleClickEdit} />
+        </Link>
         <MdDelete onClick={handleClickDelete} />
       </CommonListItem.Icons>
     </CommonListItem>

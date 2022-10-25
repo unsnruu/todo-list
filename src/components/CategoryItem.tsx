@@ -1,17 +1,20 @@
 import { MdDelete, MdModeEdit } from "react-icons/md";
+import { Link } from "react-router-dom";
 import CommonListItem from "./CommonListItem";
 
 interface CategoryItemProps {
+  id: string;
   text: string;
-  handleEdit: () => void;
   handleDelete: () => void;
 }
-function CategoryItem({ text, handleEdit, handleDelete }: CategoryItemProps) {
+function CategoryItem({ id, text, handleDelete }: CategoryItemProps) {
   return (
     <CommonListItem>
       <CommonListItem.Text text={text} />
       <CommonListItem.Icons>
-        <MdModeEdit onClick={handleEdit} />
+        <Link to={`/app/edit/category/${id}`}>
+          <MdModeEdit />
+        </Link>
         <MdDelete onClick={handleDelete} />
       </CommonListItem.Icons>
     </CommonListItem>
