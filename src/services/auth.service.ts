@@ -7,9 +7,10 @@ import {
 import { setDoc } from "firebase/firestore";
 import { auth, getDocRefBy } from "./firebase.service";
 import { COLLECTION_CATEGORY } from "../constant/common";
+import { AuthService } from "src/types/auth.type";
 
-class AuthService {
-  async signUp(email: string, password: string) {
+class AuthServiceImpl implements AuthService {
+  async signUp({ email, password }: { email: string; password: string }) {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
@@ -24,7 +25,7 @@ class AuthService {
       [categoryId]: "할 일",
     });
   }
-  async logIn(email: string, password: string) {
+  async logIn({ email, password }: { email: string; password: string }) {
     await signInWithEmailAndPassword(auth, email, password);
   }
   async logOut() {
@@ -32,4 +33,4 @@ class AuthService {
   }
 }
 
-export default new AuthService();
+export default new AuthServiceImpl();
