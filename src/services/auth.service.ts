@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -18,8 +19,9 @@ class AuthService {
     const { uid } = user;
     //회원 가입과 동시에 유저의 카테고리 정보 초기화
     const docRef = getDocRefBy(COLLECTION_CATEGORY, uid);
+    const categoryId = uuidv4();
     await setDoc(docRef, {
-      categories: [],
+      [categoryId]: "할 일",
     });
   }
   async logIn(email: string, password: string) {

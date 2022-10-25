@@ -9,14 +9,14 @@ import type { Todos } from "../types/todo.type";
 import type { Categories, Category } from "../types/category.type";
 import type { FetchingState } from "../types/common.type";
 
-type SelectedCategory = null | Category;
+type SelectedCategory = null | string;
 interface TodosState {
   selectedCategory: SelectedCategory;
-  categories: Categories;
+  categories: Categories | null;
   todos: Todos;
   user: User;
   setSelectedCategory: Dispatch<SetStateAction<SelectedCategory>>;
-  setCategories: Dispatch<SetStateAction<Categories>>;
+  setCategories: Dispatch<SetStateAction<Categories | null>>;
   setTodos: Dispatch<SetStateAction<Todos>>;
   state: FetchingState;
 }
@@ -34,7 +34,7 @@ export const TodosStateContext = createContext<TodosState>({
 function TodosStateProvider({ children }: PropsWithChildren) {
   const [selectedCategory, setSelectedCategory] =
     useState<SelectedCategory>(null);
-  const [categories, setCategories] = useState<Categories>(null);
+  const [categories, setCategories] = useState<Categories | null>(null);
   const [todos, setTodos] = useState<Todos>([]);
   const [user, setUser] = useState<User>(null);
   const [state, setState] = useState<FetchingState>("idle");
@@ -59,12 +59,15 @@ function TodosStateProvider({ children }: PropsWithChildren) {
     const fetchTodos = async () => {
       if (!selectedCategory) return;
       setState("loading");
-      const todos = await todoService.getTodosByCategory(selectedCategory);
+      const todos = await todoService.getTodosByCategory(
+        selectedCategory,
+        user
+      );
       setTodos(todos);
       setState("idle");
     };
     fetchTodos();
-  }, [selectedCategory]);
+  }, [selectedCategory, user]);
 
   return (
     <TodosStateContext.Provider

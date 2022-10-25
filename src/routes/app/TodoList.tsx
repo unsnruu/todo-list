@@ -1,27 +1,39 @@
 import React, { useState } from "react";
-import { Form, useNavigation } from "react-router-dom";
-import styled from "@emotion/styled";
 
-import { deleteTodo, editTodo } from "@api/todo";
+import Page from "@components/CommonPage";
 import TodoItem from "@components/TodoItem";
 import useTodoList from "@hooks/useTodoList";
+import todoService from "@services/todo.service";
 import type { Todos } from "../../types/todo.type";
+import { createTodo } from "../../utils/createTodo";
 
-function TodoList() {
-  const { todos, setTodos, state } = useTodoList();
-  const naviagation = useNavigation();
+function TodoListRoute() {
+  const { todos, setTodos, state, user, selectedCategory } = useTodoList();
   const [newText, setNewText] = useState("");
 
-  const handleSubmit = () => {
-    setNewText("");
-  };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewText(e.currentTarget.value);
+  };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!selectedCategory) return;
+
+    const id = await todoService.addTodo(newText, selectedCategory, user);
+    if (!id) throw new Error("새로운 투두를 생성하는데 문제가 발생했습니다.");
+
+    const newTodo = createTodo({
+      id,
+      category: selectedCategory,
+      isCompleted: false,
+      text: newText,
+    });
+    setTodos((todos) => [...todos, newTodo]);
+    setNewText("");
   };
 
   const createDeleteHandler = (id: string) => async () => {
     if (!window.confirm("정말로 지우시겠습니까?")) return;
-    await deleteTodo(id);
+    await todoService.deleteTodo(id, user);
     setTodos((todos) => todos.filter((todo) => todo.id !== id));
   };
   const createToggleHandler = (id: string) => async () => {
@@ -29,39 +41,42 @@ function TodoList() {
     if (!todo) {
       throw new Error("해당 아이디에 해당하는 투두 객체가 존재하지 않습니다.");
     }
-    await editTodo(id, { ...todo, isCompleted: !todo.isCompleted });
+    await todoService.editTodo(
+      id,
+      { ...todo, isCompleted: !todo.isCompleted },
+      user
+    );
     setTodos((todos) => getToggledTodosById(todos, id));
   };
 
-  if (naviagation.state === "loading" || !todos) return <div>loading</div>;
+  if (state === "loading") return <div>loading</div>;
 
   return (
-    <Container>
-      <StyledForm method="post" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="text"
+    <Page>
+      <Page.Title text={selectedCategory || ""} />
+      <Page.Form handleSubmit={handleSubmit}>
+        <Page.TextInput
+          handleChange={handleChange}
           placeholder="✨새로운 할 일을 여기 입력해주세요"
-          value={newText}
-          onChange={handleChange}
         />
-        <button>추가</button>
-      </StyledForm>
-      <TodoItemContainer>
-        {todos.map(({ id, isCompleted, text }) => (
+        <Page.SubmitButton text="제출" />
+      </Page.Form>
+      <Page.List>
+        {todos.map(({ id, text, isCompleted }) => (
           <TodoItem
             key={id}
+            id={id}
             text={text}
             isCompleted={isCompleted}
-            handleDelete={createDeleteHandler(id)}
-            handleToggleCompletion={createToggleHandler(id)}
+            handleClickDelete={createDeleteHandler(id)}
+            handleClickToggle={createToggleHandler(id)}
           />
         ))}
-      </TodoItemContainer>
-    </Container>
+      </Page.List>
+    </Page>
   );
 }
-export default TodoList;
+export default TodoListRoute;
 
 function getToggledTodosById(todos: Todos, id: string) {
   return todos.map((todo) => {
@@ -69,43 +84,3 @@ function getToggledTodosById(todos: Todos, id: string) {
     return todo;
   });
 }
-
-const Container = styled.div`
-  height: 100%;
-  overflow: hidden;
-`;
-
-const StyledForm = styled(Form)`
-  width: 100%;
-  background-color: white;
-  border-radius: 1rem;
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
-  & input {
-    border: none;
-    font-size: 1rem;
-    padding: 0.5rem;
-    width: 100%;
-    flex: 5;
-    outline: none;
-  }
-  & input :focus {
-    background-color: transparent;
-  }
-  & button {
-    border: none;
-    background-color: ${({ theme }) => theme.color.secondary};
-    border-radius: 0.5rem;
-    padding: 1rem;
-    flex: 1;
-    cursor: pointer;
-    font-size: 1rem;
-    color: white;
-  }
-`;
-const TodoItemContainer = styled.ul`
-  height: 100%;
-  overflow: scroll;
-`;
