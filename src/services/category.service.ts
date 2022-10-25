@@ -44,26 +44,22 @@ class CategoryServiceImpl implements CategoryService {
   }
   async editCategory(
     category: Category,
-    newTitle: string,
+    newCategoryTitle: string,
     user: User
   ): Promise<void> {
     if (!user) throw new Error("no user");
     const { uid } = user;
     const categroyRef = getDocRefBy(COLLECTION_CATEGORY, uid);
-    //기존 카테고리로 변경
+
     await updateDoc(categroyRef, {
-      [category.id]: newTitle,
+      [category.id]: newCategoryTitle,
     });
-    // 기존 카테고리에 있었던 모든 Todos를 일괄 수정
-    // 1.카테고리에 해당하는 모든 투두를 읽어온다.
-    // 2.투두를 업데이트한다.
-    // ? 캐쉬를 사용할 수는 없을까
-    // 어떻게 하면 효율적으로 작성할 수 있을까
+
     const todos = await todoService.getTodosByCategory(category.title, user);
     todos.forEach(async (todo) => {
       await todoService.editTodo(
         todo.id,
-        { ...todo, category: newTitle },
+        { ...todo, categoryId: category.id },
         user
       );
     });
