@@ -17,7 +17,11 @@ function TodoEdit() {
     e.preventDefault();
     if (!id) throw new Error("id가 존재하지 않습니다.");
     if (!curTodo) throw new Error("todo가 존재하지 않습니다.");
-    await todoService.editTodo(id, { ...curTodo, text: newText }, user);
+    await todoService.editTodo({
+      todoId: id,
+      todo: { ...curTodo, text: newText },
+      user,
+    });
     setTodos((todos) =>
       todos.map((todo) => (todo.id === id ? { ...todo, text: newText } : todo))
     );

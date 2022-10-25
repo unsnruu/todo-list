@@ -9,10 +9,10 @@ export type Categories = Category[];
 export interface CategoryService {
   getCategories(user: User): Promise<Categories | null>;
   addCategory({
-    newCategory,
+    newCategoryTitle,
     user,
   }: {
-    newCategory: CategoryTitle;
+    newCategoryTitle: CategoryTitle;
     user: User;
   }): Promise<CategoryId | null>;
   editCategory({

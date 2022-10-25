@@ -18,7 +18,11 @@ function TodoListRoute() {
     e.preventDefault();
     if (!selectedCategory) return;
 
-    const id = await todoService.addTodo(newText, selectedCategory.id, user);
+    const id = await todoService.addTodo({
+      newTodoText: newText,
+      categoryId: selectedCategory.id,
+      user,
+    });
     if (!id) throw new Error("새로운 투두를 생성하는데 문제가 발생했습니다.");
 
     const newTodo = createTodo({
@@ -33,7 +37,7 @@ function TodoListRoute() {
 
   const createDeleteHandler = (id: string) => async () => {
     if (!window.confirm("정말로 지우시겠습니까?")) return;
-    await todoService.deleteTodo(id, user);
+    await todoService.deleteTodo({ todoId: id, user });
     setTodos((todos) => todos.filter((todo) => todo.id !== id));
   };
   const createToggleHandler = (id: string) => async () => {
@@ -41,11 +45,11 @@ function TodoListRoute() {
     if (!todo) {
       throw new Error("해당 아이디에 해당하는 투두 객체가 존재하지 않습니다.");
     }
-    await todoService.editTodo(
-      id,
-      { ...todo, isCompleted: !todo.isCompleted },
-      user
-    );
+    await todoService.editTodo({
+      todoId: id,
+      todo: { ...todo, isCompleted: !todo.isCompleted },
+      user,
+    });
     setTodos((todos) => getToggledTodosById(todos, id));
   };
 

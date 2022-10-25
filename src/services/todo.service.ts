@@ -17,15 +17,18 @@ import type { Todo, Todos, TodoForm, TodoService } from "../types/todo.type";
 import { db } from "./firebase.service";
 
 class TodoServiceImpl implements TodoService {
-  async getTodosByCategory(
-    selectedCategory: string,
-    user: User
-  ): Promise<Todos> {
+  async getTodosByCategory({
+    categoryId,
+    user,
+  }: {
+    categoryId: string;
+    user: User;
+  }): Promise<Todos | null> {
     if (!user) return [];
 
     const { uid } = user;
     const userCollection = collection(db, uid) as CollectionReference<Todo>;
-    const q = query(userCollection, where("category", "==", selectedCategory));
+    const q = query(userCollection, where("category", "==", categoryId));
     const querySnapshot = await getDocs(q);
 
     const todos: Todo[] = [];
@@ -37,29 +40,47 @@ class TodoServiceImpl implements TodoService {
 
     return todos;
   }
-  async addTodo(
-    newTodo: string,
-    categoryId: string,
-    user: User
-  ): Promise<TodoId | null> {
+  async addTodo({
+    categoryId,
+    newTodoText,
+    user,
+  }: {
+    newTodoText: string;
+    categoryId: string;
+    user: User;
+  }): Promise<string | null> {
     if (!user) return null;
     const result = await addDoc(collection(db, user.uid), {
-      text: newTodo,
+      text: newTodoText,
       categoryId,
       isCompleted: false,
     });
     return result.id;
   }
-  async editTodo(id: string, todo: TodoForm, user: User): Promise<void> {
+  async editTodo({
+    todo,
+    todoId,
+    user,
+  }: {
+    todoId: string;
+    todo: TodoForm;
+    user: User;
+  }): Promise<void> {
     if (!user) throw new Error("no user has found");
     const { uid } = user;
-    const todoRef = doc(db, uid, id);
+    const todoRef = doc(db, uid, todoId);
     await setDoc(todoRef, todo);
   }
-  async deleteTodo(id: string, user: User): Promise<void> {
+  async deleteTodo({
+    todoId,
+    user,
+  }: {
+    todoId: string;
+    user: User;
+  }): Promise<void> {
     if (!user) throw new Error("no user has found");
     const { uid } = user;
-    const todoRef = doc(db, uid, id);
+    const todoRef = doc(db, uid, todoId);
     await deleteDoc(todoRef);
   }
 }
