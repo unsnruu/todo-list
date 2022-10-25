@@ -1,4 +1,3 @@
-import { Todos } from "./todo.type";
 import { User } from "./user.type";
 
 export type CategoryTitle = string;
