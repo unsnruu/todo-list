@@ -1,3 +1,4 @@
+import type { Auth } from "firebase/auth";
 import { CategoryId } from "./category.type";
 import type { Text, TodoId } from "./common.type";
 import { User } from "./user.type";
@@ -14,31 +15,19 @@ export type TodoForm = Omit<Todo, "id">;
 //user을 TodoService가 품는 방법은 없을까방
 //todo : user객체를 다루는 방식을 변경할 것
 export interface TodoService {
+  auth: Auth;
   getTodosByCategory({
     categoryId,
-    user,
   }: {
     categoryId: CategoryId;
-    user: User;
   }): Promise<Todos | null>;
-
   addTodo({
     categoryId,
     newTodoText,
-    user,
   }: {
     newTodoText: string;
     categoryId: CategoryId;
-    user: User;
   }): Promise<TodoId | null>;
-  editTodo({
-    todo,
-    todoId,
-    user,
-  }: {
-    todoId: TodoId;
-    todo: TodoForm;
-    user: User;
-  }): Promise<void>;
-  deleteTodo({ todoId, user }: { todoId: TodoId; user: User }): Promise<void>;
+  editTodo({ todo, todoId }: { todoId: TodoId; todo: TodoForm }): Promise<void>;
+  deleteTodo({ todoId }: { todoId: TodoId }): Promise<void>;
 }
