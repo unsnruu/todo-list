@@ -18,12 +18,12 @@ function TodoListRoute() {
     e.preventDefault();
     if (!selectedCategory) return;
 
-    const id = await todoService.addTodo(newText, selectedCategory, user);
+    const id = await todoService.addTodo(newText, selectedCategory.id, user);
     if (!id) throw new Error("새로운 투두를 생성하는데 문제가 발생했습니다.");
 
     const newTodo = createTodo({
       id,
-      category: selectedCategory,
+      categoryId: selectedCategory.id,
       isCompleted: false,
       text: newText,
     });
@@ -53,7 +53,7 @@ function TodoListRoute() {
 
   return (
     <Page>
-      <Page.Title text={selectedCategory || ""} />
+      <Page.Title text={selectedCategory?.title || ""} />
       <Page.Form handleSubmit={handleSubmit}>
         <Page.TextInput
           handleChange={handleChange}
