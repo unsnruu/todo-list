@@ -9,7 +9,7 @@ import categoryService from "@services/category.service";
 function CategoryEdit() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { categories, setCategories, user } = useTodoList();
+  const { categories, setCategories } = useTodoList();
   const curCategory = categories
     ?.filter((category) => category.id === id)
     .pop();
@@ -27,7 +27,6 @@ function CategoryEdit() {
     await categoryService.editCategory({
       category: curCategory,
       newCategoryTitle: newTitle,
-      user,
     });
     setCategories((categories) => {
       if (!categories) return null;

@@ -28,6 +28,6 @@ export async function action({ request }: ActionFunctionArgs) {
 
   if (typeof email !== "string" || typeof password !== "string") return;
 
-  await authService.logIn(email, password);
+  await authService.logIn({ email, password });
   return redirect("/");
 }

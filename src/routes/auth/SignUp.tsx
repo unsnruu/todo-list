@@ -25,7 +25,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const { email, password } = Object.fromEntries(formData);
   if (typeof email !== "string" || typeof password !== "string") return;
 
-  await authService.signUp(email, password);
+  await authService.signUp({ email, password });
   return redirect("/");
 }
 

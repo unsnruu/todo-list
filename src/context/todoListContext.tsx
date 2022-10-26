@@ -48,7 +48,7 @@ function TodosStateProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     const fetchCategories = async () => {
       setState("loading");
-      const categories = await categoryService.getCategories(user);
+      const categories = await categoryService.getCategories();
       setCategories(categories);
       setState("idle");
     };
@@ -61,7 +61,6 @@ function TodosStateProvider({ children }: PropsWithChildren) {
       setState("loading");
       const todos = await todoService.getTodosByCategory({
         categoryId: selectedCategory.id,
-        user,
       });
       if (!todos) return;
       setTodos(todos);

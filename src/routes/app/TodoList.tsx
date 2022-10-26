@@ -8,7 +8,7 @@ import type { Todos } from "../../types/todo.type";
 import { createTodo } from "../../utils/createTodo";
 
 function TodoListRoute() {
-  const { todos, setTodos, state, user, selectedCategory } = useTodoList();
+  const { todos, setTodos, state, selectedCategory } = useTodoList();
   const [newText, setNewText] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +21,6 @@ function TodoListRoute() {
     const id = await todoService.addTodo({
       newTodoText: newText,
       categoryId: selectedCategory.id,
-      user,
     });
     if (!id) throw new Error("새로운 투두를 생성하는데 문제가 발생했습니다.");
 
@@ -37,7 +36,7 @@ function TodoListRoute() {
 
   const createDeleteHandler = (id: string) => async () => {
     if (!window.confirm("정말로 지우시겠습니까?")) return;
-    await todoService.deleteTodo({ todoId: id, user });
+    await todoService.deleteTodo({ todoId: id });
     setTodos((todos) => todos.filter((todo) => todo.id !== id));
   };
   const createToggleHandler = (id: string) => async () => {
@@ -48,7 +47,6 @@ function TodoListRoute() {
     await todoService.editTodo({
       todoId: id,
       todo: { ...todo, isCompleted: !todo.isCompleted },
-      user,
     });
     setTodos((todos) => getToggledTodosById(todos, id));
   };

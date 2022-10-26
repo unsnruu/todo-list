@@ -6,7 +6,7 @@ import todoService from "@services/todo.service";
 import useTodoList from "@hooks/useTodoList";
 
 function TodoEdit() {
-  const { todos, setTodos, user } = useTodoList();
+  const { todos, setTodos } = useTodoList();
   const [newText, setNewText] = useState("");
   const { id, category } = useParams();
   const navigate = useNavigate();
@@ -20,7 +20,6 @@ function TodoEdit() {
     await todoService.editTodo({
       todoId: id,
       todo: { ...curTodo, text: newText },
-      user,
     });
     setTodos((todos) =>
       todos.map((todo) => (todo.id === id ? { ...todo, text: newText } : todo))

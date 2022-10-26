@@ -9,24 +9,23 @@ import {
   setDoc,
   CollectionReference,
 } from "firebase/firestore";
-import { TodoId } from "src/types/common.type";
-import { User } from "src/types/user.type";
 
+import { auth, db } from "./firebase.service";
 import type { Todo, Todos, TodoForm, TodoService } from "../types/todo.type";
-
-import { db } from "./firebase.service";
+import { Auth } from "firebase/auth";
 
 class TodoServiceImpl implements TodoService {
+  auth: Auth;
+  constructor(auth: Auth) {
+    this.auth = auth;
+  }
   async getTodosByCategory({
     categoryId,
-    user,
   }: {
     categoryId: string;
-    user: User;
   }): Promise<Todos | null> {
-    if (!user) return [];
-
-    const { uid } = user;
+    if (!this.auth.currentUser) return null;
+    const { uid } = this.auth.currentUser;
     const userCollection = collection(db, uid) as CollectionReference<Todo>;
     const q = query(userCollection, where("category", "==", categoryId));
     const querySnapshot = await getDocs(q);
@@ -43,14 +42,13 @@ class TodoServiceImpl implements TodoService {
   async addTodo({
     categoryId,
     newTodoText,
-    user,
   }: {
     newTodoText: string;
     categoryId: string;
-    user: User;
   }): Promise<string | null> {
-    if (!user) return null;
-    const result = await addDoc(collection(db, user.uid), {
+    if (!this.auth.currentUser) return null;
+    const { uid } = this.auth.currentUser;
+    const result = await addDoc(collection(db, uid), {
       text: newTodoText,
       categoryId,
       isCompleted: false,
@@ -60,29 +58,20 @@ class TodoServiceImpl implements TodoService {
   async editTodo({
     todo,
     todoId,
-    user,
   }: {
     todoId: string;
     todo: TodoForm;
-    user: User;
   }): Promise<void> {
-    if (!user) throw new Error("no user has found");
-    const { uid } = user;
+    if (!this.auth.currentUser) return;
+    const { uid } = this.auth.currentUser;
     const todoRef = doc(db, uid, todoId);
     await setDoc(todoRef, todo);
   }
-  async deleteTodo({
-    todoId,
-    user,
-  }: {
-    todoId: string;
-    user: User;
-  }): Promise<void> {
-    if (!user) throw new Error("no user has found");
-    const { uid } = user;
+  async deleteTodo({ todoId }: { todoId: string }): Promise<void> {
+    if (!this.auth.currentUser) return;
+    const { uid } = this.auth.currentUser;
     const todoRef = doc(db, uid, todoId);
     await deleteDoc(todoRef);
   }
 }
-
-export default new TodoServiceImpl();
+export default new TodoServiceImpl(auth);

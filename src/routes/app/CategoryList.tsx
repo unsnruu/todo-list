@@ -8,7 +8,7 @@ import type { FormEvent, ChangeEvent } from "react";
 import type { Category } from "src/types/category.type";
 
 function CategoryList() {
-  const { categories, setCategories, user } = useTodoList();
+  const { categories, setCategories } = useTodoList();
   const [title, setTitle] = useState("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -17,7 +17,6 @@ function CategoryList() {
 
     const id = await categoryService.addCategory({
       newCategoryTitle: title,
-      user,
     });
     if (!id) throw new Error("새로운 카테고리 생성에 실패하였습니다.");
 
@@ -31,7 +30,7 @@ function CategoryList() {
   };
 
   const createDeleteHandler = (category: Category) => async () => {
-    const id = await categoryService.deleteCategory({ category, user });
+    const id = await categoryService.deleteCategory({ category });
     setCategories((categories) => {
       if (!categories) return null;
       return categories.filter((category) => category.id !== id);
