@@ -6,7 +6,7 @@ import todoService from "@services/todo.service";
 import useTodoList from "@hooks/useTodoList";
 
 function TodoEdit() {
-  const { todos, setTodos, user } = useTodoList();
+  const { todos, setTodos } = useTodoList();
   const [newText, setNewText] = useState("");
   const { id, category } = useParams();
   const navigate = useNavigate();

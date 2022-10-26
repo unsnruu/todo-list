@@ -8,7 +8,7 @@ import type { Todos } from "../../types/todo.type";
 import { createTodo } from "../../utils/createTodo";
 
 function TodoListRoute() {
-  const { todos, setTodos, state, user, selectedCategory } = useTodoList();
+  const { todos, setTodos, state, selectedCategory } = useTodoList();
   const [newText, setNewText] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +36,7 @@ function TodoListRoute() {
 
   const createDeleteHandler = (id: string) => async () => {
     if (!window.confirm("정말로 지우시겠습니까?")) return;
-    await todoService.deleteTodo({ todoId: id, user });
+    await todoService.deleteTodo({ todoId: id });
     setTodos((todos) => todos.filter((todo) => todo.id !== id));
   };
   const createToggleHandler = (id: string) => async () => {
