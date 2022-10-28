@@ -6,6 +6,7 @@ import useTodoList from "@hooks/useTodoList";
 import todoService from "@services/todo.service";
 import type { Todos } from "../../types/todo.type";
 import { createTodo } from "../../utils/createTodo";
+import SkeletonPage from "@components/SkeletonPage";
 
 function TodoListRoute() {
   const { todos, setTodos, state, selectedCategory } = useTodoList();
@@ -18,14 +19,15 @@ function TodoListRoute() {
     e.preventDefault();
     if (!selectedCategory) return;
 
-    const id = await todoService.addTodo({
+    const todoId = await todoService.addTodo({
       newTodoText: newText,
       categoryId: selectedCategory.id,
     });
-    if (!id) throw new Error("새로운 투두를 생성하는데 문제가 발생했습니다.");
+    if (!todoId)
+      throw new Error("새로운 투두를 생성하는데 문제가 발생했습니다.");
 
     const newTodo = createTodo({
-      id,
+      todoId,
       categoryId: selectedCategory.id,
       isCompleted: false,
       text: newText,
@@ -51,7 +53,7 @@ function TodoListRoute() {
     setTodos((todos) => getToggledTodosById(todos, id));
   };
 
-  if (state === "loading") return <div>loading</div>;
+  if (state === "loading") return <SkeletonPage />;
 
   return (
     <Page>

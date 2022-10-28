@@ -6,9 +6,10 @@ import CategoryItem from "@components/CategoryItem";
 
 import type { FormEvent, ChangeEvent } from "react";
 import type { Category } from "src/types/category.type";
+import SkeletonPage from "@components/SkeletonPage";
 
 function CategoryList() {
-  const { categories, setCategories } = useTodoList();
+  const { categories, setCategories, state } = useTodoList();
   const [title, setTitle] = useState("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -37,7 +38,8 @@ function CategoryList() {
     });
   };
 
-  if (!categories) return <div></div>;
+  if (!categories) return <div>카테고리가 존재하지 않습니다</div>;
+  if (state === "loading") <SkeletonPage />;
   return (
     <CommonPage>
       <CommonPage.Form handleSubmit={handleSubmit}>
