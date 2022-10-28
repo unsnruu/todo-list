@@ -1,6 +1,6 @@
 # Todo List
 
-`Todo List`로 시작하여 다시 `Todo List`로 돌아왔습니다. 멋진 프로젝트를 만들기 보다는 기본을 보여주는 것을 중요시 생각했습니다.
+`Todo List`로 시작하여 다시 `Todo List`로 돌아왔습니다.
 
 ## 목차
 
