@@ -1,10 +1,13 @@
-import type { PropsWithChildren } from "react";
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
+import type { PropsWithChildren } from "react";
 
 function Header({ children }: PropsWithChildren) {
   return (
     <Container>
-      <span>logo</span>
+      <Link to="/">
+        <img src="favicon_io/favicon-32x32.png" alt="logo" />
+      </Link>
       {children}
     </Container>
   );
