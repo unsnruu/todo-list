@@ -1,7 +1,6 @@
 import type { Auth } from "firebase/auth";
 import { CategoryId } from "./category.type";
 import type { Text, TodoId } from "./common.type";
-import { User } from "./user.type";
 
 export interface Todo {
   text: Text;

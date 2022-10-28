@@ -3,7 +3,8 @@ import { MdMiscellaneousServices } from "react-icons/md";
 
 import StyledLink from "@components/StyledLink";
 import useTodosState from "@hooks/useTodoList";
-import type { Category, CategoryId } from "../types/category.type";
+import type { Category } from "../types/category.type";
+import Skeleton from "./Skeleton";
 
 function Sidebar() {
   const { state, categories, setSelectedCategory } = useTodosState();
@@ -12,16 +13,19 @@ function Sidebar() {
     setSelectedCategory(category);
   };
 
-  //? 분기점을 이렇게 설정하는 게 맞을까?
-  if (state === "loading") return <div>로딩중</div>;
-  if (!categories) {
-    return <div>카테고리가 존재하지 않습니다</div>;
+  if (state === "loading") {
+    return (
+      <SkeletonContainer>
+        <Skeleton />
+      </SkeletonContainer>
+    );
   }
+
   return (
     <Container>
       <Title>카테고리</Title>
       <LinkList>
-        {categories.map((category) => (
+        {categories?.map((category) => (
           <li key={category.id} onClick={createCategoryHandler(category)}>
             <StyledLink to={`todo/${category.title}`}>
               {category.title}
@@ -37,6 +41,13 @@ function Sidebar() {
 }
 
 export default Sidebar;
+const SkeletonContainer = styled.div`
+  width: 16rem;
+  height: 100%;
+  margin: 1rem;
+  border-radius: 1rem;
+  overflow: hidden;
+`;
 
 const Container = styled.div`
   width: 16rem;
