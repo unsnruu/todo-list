@@ -44,10 +44,10 @@ function Home() {
           <h2>
             👷‍♀️ 진행중인 내용 <span>(2022.11.01 기준)</span>
           </h2>
-          <ul>
+          <StyledList>
             <li>기본적인 UI/UX 수정</li>
-          </ul>
-
+            <li></li>
+          </StyledList>
           <p>
             자세한 내용은{" "}
             <a
@@ -84,5 +84,14 @@ const Content = styled.div`
   padding: 1rem;
   & > div {
     margin-bottom: 1rem;
+  }
+  & h2 {
+    margin-bottom: 1rem;
+  }
+`;
+const StyledList = styled.ul`
+  margin-bottom: 1rem;
+  & > li {
+    margin-left: 2rem;
   }
 `;
