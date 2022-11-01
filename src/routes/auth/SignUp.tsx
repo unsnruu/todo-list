@@ -52,6 +52,7 @@ const StyledForm = styled(Form)`
     background-color: transparent;
     margin-bottom: 1rem;
     font-size: 1.25rem;
+    padding: 0.5rem;
   }
   & label {
     font-size: 1.25rem;

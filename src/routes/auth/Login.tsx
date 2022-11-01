@@ -1,7 +1,8 @@
-import ShadowBox from "@components/ShadowBox";
 import styled from "@emotion/styled";
-import authService from "@services/auth.service";
 import { Form, ActionFunctionArgs, redirect } from "react-router-dom";
+
+import authService from "@services/auth.service";
+import ShadowBox from "@components/ShadowBox";
 
 function Login() {
   return (
@@ -52,6 +53,7 @@ const StyledForm = styled(Form)`
     background-color: transparent;
     margin-bottom: 1rem;
     font-size: 1.25rem;
+    padding: 0.5rem;
   }
   & label {
     font-size: 1.25rem;
