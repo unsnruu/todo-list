@@ -8,7 +8,7 @@ function SignUp() {
   return (
     <Container>
       <ShadowBox>
-        <h1>로그인</h1>
+        <h1>회원가입</h1>
         <StyledForm method="post" aria-label="로그인">
           <label>
             이메일
