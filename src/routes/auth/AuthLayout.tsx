@@ -16,6 +16,7 @@ function AuthLayout() {
 export default AuthLayout;
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+  & > header {
+    margin-bottom: 1rem;
+  }
 `;
