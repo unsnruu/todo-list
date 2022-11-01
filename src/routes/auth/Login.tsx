@@ -67,5 +67,6 @@ const StyledForm = styled(Form)`
     border-radius: 0.5rem;
     background-color: ${({ theme }) => theme.color.primary};
     color: white;
+    cursor: pointer;
   }
 `;
