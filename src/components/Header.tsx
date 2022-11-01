@@ -15,7 +15,7 @@ function Header({ children }: PropsWithChildren) {
 
 export default Header;
 
-const Container = styled.div`
+const Container = styled.header`
   width: 100%;
   height: 5rem;
   background-color: white;
