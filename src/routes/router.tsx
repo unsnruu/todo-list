@@ -14,12 +14,13 @@ import TodoList from "@routes/app/TodoList";
 import TodoEdit from "./app/TodoEdit";
 import CategoryList from "@routes/app/CategoryList";
 import CategoryEdit from "./app/CategoryEdit";
+import AuthLayout from "./auth/AuthLayout";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
       <Route index element={<Home />} />
-      <Route path="auth">
+      <Route path="auth" element={<AuthLayout />}>
         <Route path="login" element={<Login />} action={loginAction} />
         <Route path="signup" element={<SignUp />} action={signupAction} />
       </Route>
