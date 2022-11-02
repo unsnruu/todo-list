@@ -40,6 +40,7 @@ const LogOutButton = styled.button`
   background-color: transparent;
   font-size: 1rem;
   color: ${({ theme }) => theme.color.dark};
+  cursor: pointer;
 `;
 const Content = styled.div`
   width: 100%;
