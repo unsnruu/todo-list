@@ -6,7 +6,7 @@ function Header({ children }: PropsWithChildren) {
   return (
     <Container>
       <Link to="/">
-        <img src="favicon_io/favicon-32x32.png" alt="logo" />
+        <img src="/favicon_io/favicon-32x32.png" alt="logo" />
       </Link>
       {children}
     </Container>
