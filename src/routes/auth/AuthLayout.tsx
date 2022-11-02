@@ -5,9 +5,7 @@ import { Link, Outlet } from "react-router-dom";
 function AuthLayout() {
   return (
     <Container>
-      <Header>
-        <Link to="/">home</Link>
-      </Header>
+      <Header></Header>
       <Outlet />
     </Container>
   );
