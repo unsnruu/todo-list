@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
-import AppLayout from "@components/AppLayout";
+import AppLayout from "@routes/app/components/AppLayout";
 import useTodoList from "@hooks/useTodoList";
 
 function AppRoot() {
