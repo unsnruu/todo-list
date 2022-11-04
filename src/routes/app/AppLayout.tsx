@@ -1,17 +1,26 @@
-import type { PropsWithChildren } from "react";
+import { useEffect } from "react";
+import { Outlet, useNavigate, redirect } from "react-router-dom";
 import styled from "@emotion/styled";
 
 import Header from "@components/Header";
 import Sidebar from "@components/Sidebar";
 
-import { redirect } from "react-router-dom";
 import authService from "@services/auth.service";
+import useTodoList from "@hooks/useTodoList";
 
-function AppLayout({ children }: PropsWithChildren) {
+function AppRoot() {
+  const { user } = useTodoList();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) navigate("/");
+  }, [navigate, user]);
+
   const handleClickLogout = () => {
     authService.logOut();
     redirect("/");
   };
+
   return (
     <Container>
       <Header>
@@ -19,13 +28,16 @@ function AppLayout({ children }: PropsWithChildren) {
       </Header>
       <Main>
         <Sidebar />
-        <Content>{children}</Content>
+        <Content>
+          <Outlet />
+        </Content>
       </Main>
       <Footer />
     </Container>
   );
 }
-export default AppLayout;
+
+export default AppRoot;
 
 const Container = styled.div`
   height: 100%;
@@ -40,6 +52,7 @@ const LogOutButton = styled.button`
   background-color: transparent;
   font-size: 1rem;
   color: ${({ theme }) => theme.color.dark};
+  cursor: pointer;
 `;
 const Content = styled.div`
   width: 100%;
