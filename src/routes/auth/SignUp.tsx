@@ -1,21 +1,24 @@
-import styled from "@emotion/styled";
-import { ActionFunctionArgs, redirect } from "react-router-dom";
-
 import authService from "@services/auth.service";
-import ShadowBox from "@components/ShadowBox";
-import AuthForm from "./components/AuthForm";
+import { ActionFunctionArgs, Form, redirect } from "react-router-dom";
 
 function SignUp() {
   return (
-    <Container>
-      <ShadowBox>
-        <h1>회원가입</h1>
-        <AuthForm />
-      </ShadowBox>
-    </Container>
+    <div>
+      <h1>회원가입</h1>
+      <Form aria-label="회원가입" method="post">
+        <label>
+          이메일
+          <input type="text" name="email" />
+        </label>
+        <label>
+          비밀번호
+          <input type="password" name="password" />
+        </label>
+        <button>제출</button>
+      </Form>
+    </div>
   );
 }
-export default SignUp;
 
 export async function action({ request }: ActionFunctionArgs) {
   let formData = await request.formData();
@@ -26,8 +29,4 @@ export async function action({ request }: ActionFunctionArgs) {
   return redirect("/");
 }
 
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+export default SignUp;

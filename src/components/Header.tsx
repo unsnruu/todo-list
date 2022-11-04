@@ -1,13 +1,10 @@
-import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
 import type { PropsWithChildren } from "react";
+import styled from "@emotion/styled";
 
 function Header({ children }: PropsWithChildren) {
   return (
     <Container>
-      <Link to="/">
-        <img src="/favicon_io/favicon-32x32.png" alt="logo" />
-      </Link>
+      <span>logo</span>
       {children}
     </Container>
   );
@@ -15,7 +12,7 @@ function Header({ children }: PropsWithChildren) {
 
 export default Header;
 
-const Container = styled.header`
+const Container = styled.div`
   width: 100%;
   height: 5rem;
   background-color: white;
