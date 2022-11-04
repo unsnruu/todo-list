@@ -33,9 +33,9 @@ function Sidebar() {
           </li>
         ))}
       </LinkList>
-      <Configuration to="category">
+      <StyledLink to="category">
         <MdMiscellaneousServices />
-      </Configuration>
+      </StyledLink>
     </Container>
   );
 }
@@ -64,14 +64,10 @@ const Title = styled.h1`
 `;
 const LinkList = styled.ul`
   width: 100%;
-
   & li {
     list-style: none;
     margin: 1rem;
     padding-left: 0;
     margin-left: 0;
   }
-`;
-const Configuration = styled(StyledLink)`
-  margin-top: auto;
 `;

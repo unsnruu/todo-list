@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
-import styled from "@emotion/styled";
+
+import Layout from "@components/Layout";
 
 function Root() {
   return (
@@ -8,11 +9,5 @@ function Root() {
     </Layout>
   );
 }
-
-const Layout = styled.div`
-  height: 100vh;
-  width: 100vw;
-  background-color: ${({ theme }) => theme.color.light};
-`;
 
 export default Root;
