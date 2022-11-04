@@ -46,7 +46,6 @@ function Home() {
           </h2>
           <StyledList>
             <li>기본적인 UI/UX 수정</li>
-            <li></li>
           </StyledList>
           <p>
             자세한 내용은{" "}
